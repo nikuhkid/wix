@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ProjLib (Gated, Wix Mode)</title>
+<title>ProjLib (Gated, Standalone)</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check-compat.js"></script>
@@ -429,26 +429,28 @@ const FIREBASE_CONFIG = {
 (function(){
   const app = firebase.initializeApp(FIREBASE_CONFIG);
   const db = firebase.firestore();
-  const denied = (msg) => { document.getElementById('gate-denied').textContent = msg || 'Access denied.'; document.getElementById('gate-denied').style.display='block'; };
-  const reveal = () => { document.getElementById('gate-overlay').remove(); document.getElementById('app').style.display='block'; };
+  const $ = s => document.querySelector(s);
+  const denied = (msg) => { $('#gate-denied').textContent = msg || 'Access denied.'; $('#gate-denied').style.display='block'; };
+  const reveal = () => { $('#gate-overlay').remove(); $('#app').style.display='block'; };
   function check(email){
-    if(!email){ denied('No email received from Wix.'); return; }
+    if(!email){ denied('No email provided.'); return; }
     db.doc('whitelist/allowed').get({source:'server'}).then(s => {
       const arr = (s.exists && Array.isArray(s.data().emails)) ? s.data().emails.map(e=>String(e).toLowerCase()) : [];
       if(arr.includes(String(email).toLowerCase())) reveal(); else denied('Not whitelisted.');
     }).catch(e => { console.error(e); denied('Verification failed.'); });
   }
-  let email = null;
   const qs = new URLSearchParams(location.search);
-  if (qs.get('email')) email = qs.get('email');
-  if (email) { check(email); return; }
+  const qEmail = qs.get('email');
+  const actions = document.getElementById('gate-actions');
+  if (qEmail){
+    check(qEmail);
+  } else {
+    actions.innerHTML = '<input id="gate-email" class="gate-input" type="email" placeholder="you@example.com" autocomplete="email"><button id="gate-enter" class="gate-btn primary">Enter</button>';
+    actions.querySelector('#gate-enter').onclick = () => check(actions.querySelector('#gate-email').value.trim());
+  }
   window.addEventListener('message', ev => {
-    try{
-      const data = ev.data || {};
-      if (data.email){ check(String(data.email)); }
-      else { denied('No email received.'); }
-    }catch(e){ denied('Invalid message.'); }
-  }, { once:true });
+    try{ if(ev.data && ev.data.email){ check(String(ev.data.email)); } }catch(e){}
+  });
 })();
 </script>
 

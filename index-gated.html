@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProjLib Beta (Gated)</title>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-functions-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+
+<style>
+#gate-overlay {position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0b0b16;color:#eaeaea;z-index:999999;font-family:sans-serif}
+#gate-card {padding:20px;border-radius:14px;background:#151527;width:min(520px,92vw);box-shadow:0 10px 30px rgba(0,0,0,.45);text-align:center}
+#gate-denied {display:none;color:#ff6b6b;margin-top:10px}
+</style>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ProjLib Beta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #181818;
+            color: #eee;
+            font-family: "Orbitron", sans-serif;
+            text-align: center;
+        }
+
+        body.light-theme {
+            background: #fff;
+            color: #222;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 90%;
+            max-width: 1500px;
+            margin: 20px auto;
+            padding: 24px;
+            background: rgba(20, 20, 40, 0.9);
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .select-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .select-container select,
+        button,
+        input[type="text"],
+        .select-container option,
+        label[for="useProxy"] {
+            font-family: "Orbitron", sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .select-container select {
+            background: #1a1a2e;
+            color: #fff;
+            border: 2px solid #ffcc00;
+            padding: 12px 40px;
+            border-radius: 25px;
+            transition: all 0.3s ease-in-out;
+            outline: none;
+            cursor: pointer;
+            text-align: center;
+            width: 200px;
+            box-sizing: border-box;
+        }
+
+        .select-container select:hover {
+            background: #505050;
+            color: #ffdd55;
+            border-color: #ffaa00;
+        }
+
+        .select-container i {
+            pointer-events: none;
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            font-size: 22px;
+        }
+
+        #anime-icon {
+            color: #a855f7;
+        }
+
+        #play-icon {
+            color: #3b82f6;
+        }
+
+        #read-icon {
+            color: #10b981;
+        }
+
+        #watch-icon {
+            color: #ef4444;
+        }
+
+        #daily-icon {
+            color: #f59e0b;
+        }
+
+        #brain-icon {
+            color: #ff6f61;
+        }
+
+        button {
+            background: #222244;
+            color: #fff;
+            border: 2px solid #ffcc00;
+            padding: 12px 18px;
+            border-radius: 25px;
+            transition: all 0.3s ease-in-out;
+            outline: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #9d00ff, #00d4ff);
+            box-shadow: 0px 0px 10px rgba(157, 0, 255, 0.5);
+        }
+
+        input[type="text"] {
+            background: #1a1a2e;
+            color: #fff;
+            border: 2px solid #ffcc00;
+            padding: 12px;
+            border-radius: 25px;
+            width: 450px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        input[type="text"]:hover {
+            background: #222244;
+            border-color: #ffaa00;
+        }
+
+        label[for="useProxy"] {
+            font-family: "Orbitron", sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: inherit;
+            margin-left: 10px;
+        }
+
+        #proxyFrame {
+            width: 1366px;
+            height: 768px;
+            border: 2px solid #00d4ff;
+            box-shadow: 0px 0px 15px rgba(0, 212, 255, 0.4);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .loadingOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loadingOverlay .spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #ffcc00;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        body.light-theme input[type="text"],
+        body.light-theme button,
+        body.light-theme select {
+            background: #eee;
+            color: #121212;
+            border: 2px solid #ffaa00;
+        }
+
+        body.light-theme button:hover,
+        body.light-theme input[type="text"]:hover,
+        body.light-theme select:hover {
+            background: #ddd;
+            color: #121212;
+            border-color: #ffaa00;
+        }
+
+        body.light-theme .ticker-container {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .ticker-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            position: fixed;
+            bottom: 0;
+            font-size: 16px;
+            padding: 10px;
+            color: #ffcc00;
+            background: #222;
+        }
+
+        .ticker {
+            display: inline-block;
+            animation: scrollTicker 30s linear infinite;
+        }
+
+        @keyframes scrollTicker {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        .form-group {
+            margin: 32px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px 28px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input[type="text"]#currentUrl {
+            background: transparent;
+            color: #aaa;
+            border: none;
+            font-size: 15px;
+            font-family: "Orbitron", sans-serif;
+            font-weight: 500;
+            width: 100%;
+            max-width: 1366px;
+            min-width: 300px;
+            padding: 6px 0 6px 8px;
+            margin-bottom: 8px;
+            outline: none;
+            box-shadow: none;
+            pointer-events: none;
+            text-align: center;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input[type="text"]#currentUrl:focus {
+            border: none;
+            outline: none;
+            background: transparent;
+        }
+    </style>
+
+</head>
+<body>
+
+<div id="gate-overlay">
+  <div id="gate-card">
+    <div>Checking access…</div>
+    <div id="gate-denied">Access denied.</div>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+ <br>
+    <div class="container">
+        <h1 style="margin-bottom:20px">ProjLib Beta</h1>
+        <div class="row">
+            <div class="select-container"> <i id="brain-icon" class="ri-brain-line"></i> <select id="brain">
+                    <option value="">Brain Tease</option>
+                    <option value="https://www.mindgames.com/">Mind Games</option>
+                    <option value="https://www.brainzilla.com/">Brainzilla</option>
+                    <option value="https://www.puzzleprime.com/">Puzzle Prime</option>
+                </select> </div>
+            <div class="select-container"> <i id="play-icon" class="ri-gamepad-line"></i> <select id="play">
+                    <option value="">Arcade</option>
+                    <option value="https://nesninja.com/">NES Ninja</option>
+                    <option value="https://iogamesio.org/">IO Games</option>
+                    <option value="https://gam.onl">Emulators</option>
+                    <option value="https://gameforge.com/en-US/littlegames/poker-with-friends/">Poker</option>
+                    <option value="https://www.cardsagainstformality.io/">Cards Against Humanity</option>
+                </select> </div>
+            <div class="select-container"> <i id="anime-icon" class="ri-movie-line"></i> <select id="anime">
+                    <option value="">Animation</option>
+                    <option value="https://www.anitube.news/">Anitube</option>
+                    <option value="https://aniwatchtv.to/">AniWatch</option>
+                    <option value="https://aniwave.se/">AniWave</option>
+                </select> </div>
+            <div class="select-container"> <i id="read-icon" class="ri-book-open-line"></i> <select id="read">
+                    <option value="">Readable</option>
+                    <option value="https://www.mangahere.cc/">MangaHere</option>
+                    <option value="https://www.manhwaden.com/">Manhwaden</option>
+                    <option value="https://readcomiconline.li/">ReadComicOnline</option>
+                    <option value="https://gutenberg.org/">Project Gutenberg</option>
+                    <option value="https://en.readanybook.com/">READanyBOOK</option>
+                    <option value="https://readallcomics.com/">ReadAllComics</option>
+                    <option value="https://www.theblackvault.com/documentarchive/">TheBlackVault</option>
+                </select> </div>
+            <div class="select-container"> <i id="watch-icon" class="ri-video-line"></i> <select id="watch">
+                    <option value="">Watchable</option>
+                    <option value="https://tv.garden">Free Worldwide TV</option>
+                    <option value="https://flixer.su/">Flixer</option>
+                    <option value="https://www.couchtuner.show/">CouchTuner</option>
+                    <option value="https://moviedb.wiki/">Movie DB</option>
+                    <option value="https://www.hydraflix.vip/">HydraFlix</option>
+                    <option value="https://watchseries.bar/">WatchSeries</option>
+                </select> </div>
+            <div class="select-container"> <i id="daily-icon" class="ri-calendar-line"></i> <select id="daily">
+                    <option value="">Dailies</option>
+                    <option value="https://term.ooo/">Termo</option>
+                    <option value="https://bandle.app/daily">Bandle</option>
+                    <option value="https://wordleplay.com/waffle">Waffle</option>
+                    <option value="https://musicle.app">Musicle</option>
+                </select> </div>
+        </div>
+        <div class="form-group" style="margin:20px 0"> <button type="button" id="homeBtn">Home</button>
+            <form id="proxyForm" style="display:inline-block"> <input type="text" id="urlInput"
+                    placeholder="Enter website URL or search term" style="width:450px"> <label for="useProxy">Bypass
+                    CORS <input type="checkbox" id="useProxy" style="vertical-align:middle"></label> <button
+                    type="submit">Browse</button> </form> <button type="button" id="refreshBtn">Refresh</button> <button
+                type="button" onclick="projLib.fullscreenProxy()">Fullscreen</button> <button type="button"
+                id="toggleTheme">Toggle Theme</button>
+        </div>
+        <div id="proxyContainer"
+            style="position:relative;margin-top:20px;background:rgba(0,0,0,0.9);padding:10px;border-radius:10px"> <input
+                type="text" id="currentUrl" readonly placeholder="Current URL">
+            <div id="initialMessage"
+                style="padding:20px;min-height:600px;display:flex;align-items:center;justify-content:center">
+                <div style="text-align:center;color:white"> <i class="ri-global-line"
+                        style="font-size:48px;color:#555"></i>
+                    <h3>No Website Loaded</h3>
+                    <p>Enter a URL or search term above and click Browse, or click Home to load the Internet Archive.
+                    </p>
+                </div>
+            </div>
+            <div id="loadingOverlay" class="loadingOverlay">
+                <div class="spinner"></div>
+            </div> <iframe id="proxyFrame"></iframe>
+        </div>
+    </div>
+    <div class="ticker-container">
+        <div class="ticker">Latest news: Loading...</div>
+    </div>
+    <script>         
+    (function (projLib) { 
+        'use strict'; 
+        projLib.isValidUrl = function (e) { 
+            try { return (new URL(e.startsWith("http") ? e : "https://" + e)).hostname.includes(".") || "localhost" === new URL(e.startsWith("http") ? e : "https://" + e).hostname } catch (e) { return false } }; projLib.sanitizeText = function (e) { var t = document.createElement("div"); t.textContent = e; return t.innerHTML }; projLib.isValidHTML = function (e) { return e && (e.includes("<!DOCTYPE") || e.toLowerCase().includes("<html")) }; projLib.notifyUser = function (e) { var t = document.getElementById("notification"); if (!t) { t = document.createElement("div"); t.id = "notification"; document.body.appendChild(t) } t.textContent = e; t.classList.add("show"); setTimeout(function () { t.classList.remove("show") }, 4000) }; projLib.fetchWithTimeout = function (e, t, n) { t = t || {}; n = n || 15000; var o = new AbortController; var r = setTimeout(function () { o.abort() }, n); return fetch(e, Object.assign({}, t, { signal: o.signal })).then(function (resp) { clearTimeout(r); return resp }).catch(function (err) { clearTimeout(r); throw err }) }; projLib.fetchWithRetry = function (e, t, n, o) { n = n === undefined ? 2 : n; o = o || 15000; return projLib.fetchWithTimeout(e, t, o).catch(function (err) { if (n > 0) return projLib.fetchWithRetry(e, t, n - 1, o); throw err }) }; projLib.fetchRSSFeed = function (e, t) { t = t || 600000; var n = "rssFeedCache_" + e; var o = localStorage.getItem(n); if (o) { var r = JSON.parse(o); if (Date.now() - r.timestamp < t) return Promise.resolve(r.data) } var a = "https://api.allorigins.win/get?url=" + encodeURIComponent(e); return projLib.fetchWithRetry(a).then(function (resp) { if (!resp.ok) throw new Error("Network response error"); return resp.json() }).then(function (data) { localStorage.setItem(n, JSON.stringify({ timestamp: Date.now(), data: data.contents })); return data.contents }) }; projLib.updateTicker = function () { projLib.fetchRSSFeed("https://www.rtp.pt/noticias/rss/mundo").then(function (e) { var t = new DOMParser, n = t.parseFromString(e, "text/xml"), o = n.getElementsByTagName("item"); var r = ""; for (var i = 0; i < o.length; i++) { var a = o[i].getElementsByTagName("title")[0], s = o[i].getElementsByTagName("link")[0]; if (a && s) { var c = projLib.sanitizeText(a.textContent), l = s.textContent; r += '<a href="' + l + '" target="_blank" style="color: #ffcc00; text-decoration: none; margin-right: 20px;">' + c + "</a> | " } } if (r.endsWith(" | ")) r = r.slice(0, -3); document.querySelector(".ticker").innerHTML = r; var d = document.querySelector(".ticker-container"), u = 50, m = document.querySelector(".ticker").scrollWidth + d.offsetWidth, f = m / u; document.querySelector(".ticker").style.animationDuration = f + "s" }).catch(function (e) { projLib.notifyUser("Failed to load news feed."); document.querySelector(".ticker").innerText = "Failed to load news feed." }) }; projLib.loadUrlViaProxy = function (e) { var t = document.getElementById("proxyFrame"), n = "proxyCache_" + e, o = 600000, r = localStorage.getItem(n); if (r) { var a = JSON.parse(r); if (Date.now() - a.timestamp < o && projLib.isValidHTML(a.data)) { t.srcdoc = a.data; return } } return projLib.fetchWithRetry("https://api.allorigins.win/get?url=" + encodeURIComponent(e)).then(function (o) { if (!o.ok) throw new Error("AllOrigins response not OK"); return o.json() }).then(function (r) { if (projLib.isValidHTML(r.contents)) { t.srcdoc = r.contents; localStorage.setItem(n, JSON.stringify({ timestamp: Date.now(), data: r.contents })) } else { return projLib.tryCodetabs(e, t, n) } }).catch(function (o) { return projLib.tryCodetabs(e, t, n, true) }); }; projLib.tryCodetabs = function (e, t, n, o) { return projLib.fetchWithRetry("https://api.codetabs.com/v1/proxy?quest=" + e).then(function (resp) { return resp.text() }).then(function (r) { if (projLib.isValidHTML(r)) { t.srcdoc = r; localStorage.setItem(n, JSON.stringify({ timestamp: Date.now(), data: r })) } else { t.srcdoc = '<div style="color:#ffcc00;font-family:Orbitron,sans-serif;text-align:center;padding:40px;font-size:1.3em;">Failed to load page content.<br>Try disabling proxy or check the URL.</div>'; if (o) projLib.notifyUser("Both proxy services failed. Try disabling proxy or check the URL.") } }).catch(function (err) { t.srcdoc = '<div style="color:#ffcc00;font-family:Orbitron,sans-serif;text-align:center;padding:40px;font-size:1.3em;">Failed to load page content.<br>Try disabling proxy or check the URL.</div>'; if (o) projLib.notifyUser("Both proxy services failed. Try disabling proxy or check the URL.") }) }; projLib.processLoadUrl = function (e) { var t = e.trim(); if (t) { if (!projLib.isValidUrl(t)) t = "https://swisscows.com/web?query=" + encodeURIComponent(t); if (!t.startsWith("http://") && !t.startsWith("https://")) t = "https://" + t; document.getElementById("currentUrl").value = t; var n = document.getElementById("proxyFrame"); n.removeAttribute("srcdoc"); n.style.display = "block"; document.getElementById("initialMessage").style.display = "none"; var o = document.getElementById("loadingOverlay"); o.style.display = "flex"; n.onload = function () { o.style.display = "none" }; n.onerror = function () { o.style.display = "none"; projLib.notifyUser("Failed to load the content.") }; var r = document.getElementById("useProxy").checked; r ? projLib.loadUrlViaProxy(t) : n.src = t } }; projLib.fullscreenProxy = function () { var e = document.getElementById("proxyFrame"); e.requestFullscreen ? e.requestFullscreen() : e.webkitRequestFullscreen ? e.webkitRequestFullscreen() : e.msRequestFullscreen && e.msRequestFullscreen() }; projLib.applyTheme = function (e) { e === "light" ? document.body.classList.add("light-theme") : document.body.classList.remove("light-theme") }; projLib.toggleTheme = function () { document.body.classList.contains("light-theme") ? (document.body.classList.remove("light-theme"), localStorage.setItem("theme", "dark")) : (document.body.classList.add("light-theme"), localStorage.setItem("theme", "light")) }; document.addEventListener("DOMContentLoaded", function () { var e = localStorage.getItem("theme"); if (e !== "light" && e !== "dark") e = "dark"; projLib.applyTheme(e); projLib.updateTicker(); setInterval(projLib.updateTicker, 600000); document.getElementById("proxyForm").addEventListener("submit", function (ev) { ev.preventDefault(); var t = document.getElementById("urlInput").value; projLib.processLoadUrl(t) }); document.getElementById("homeBtn").addEventListener("click", function () { projLib.processLoadUrl("https://archive.org") }); document.getElementById("refreshBtn").addEventListener("click", function () { var e = document.getElementById("currentUrl").value; e && projLib.processLoadUrl(e) }); document.querySelector(".row").addEventListener("change", function (ev) { if (ev.target.tagName.toLowerCase() === "select" && ev.target.value) { projLib.processLoadUrl(ev.target.value); ev.target.selectedIndex = 0 } }); document.getElementById("toggleTheme").addEventListener("click", projLib.toggleTheme); projLib.processLoadUrl("https://archive.org") }); window.projLib = projLib; })(window.projLib || {});     </script>
+
+</div>
+
+<script>
+(function(){
+ const FIREBASE_CONFIG = { apiKey:"YOUR_API_KEY", authDomain:"YOUR_PROJECT.firebaseapp.com", projectId:"YOUR_PROJECT_ID", appId:"YOUR_APP_ID" };
+ firebase.initializeApp(FIREBASE_CONFIG);
+ const functions = firebase.functions();
+ function hideOverlay(){document.getElementById('gate-overlay').remove(); document.getElementById('app').style.display='block';}
+ function deny(msg){let d=document.getElementById('gate-denied');d.textContent=msg;d.style.display='block';}
+ const qs=new URLSearchParams(location.search);let email=qs.get('email');
+ if(!email){
+   window.addEventListener('message',ev=>{if(ev.data&&ev.data.email){email=ev.data.email;check();}}, {once:true});
+ } else {check();}
+ function check(){
+   if(!email){deny('No email');return;}
+   functions.httpsCallable('checkWhitelist')({email}).then(res=>{
+     if(res.data.allowed) hideOverlay(); else deny('Not whitelisted');
+   }).catch(e=>{console.error(e);deny('Error');});
+ }
+})();
+</script>
+
+</body>
+</html>

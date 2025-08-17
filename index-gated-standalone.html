@@ -320,10 +320,10 @@ const firebaseConfig = {
   appId: "1:773208193586:web:cd4e3dceb7ce7517299a2b"
 };
 // Enable App Check in Firebase Console and paste your site key here, then uncomment:
-// const app = firebase.initializeApp(FIREBASE_CONFIG);
-// const appCheck = firebase.appCheck();
-// appCheck.activate('6Ldg_6UrAAAAADObWi4cgNVix4n4KD0NwbEPO2xR', true);
-// appCheck.setTokenAutoRefreshEnabled(true);
+const app = firebase.initializeApp(FIREBASE_CONFIG);
+const appCheck = firebase.appCheck();
+appCheck.activate('6Ldg_6UrAAAAADObWi4cgNVix4n4KD0NwbEPO2xR', true);
+appCheck.setTokenAutoRefreshEnabled(true);
 </script>
 
 </head>

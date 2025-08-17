@@ -435,7 +435,7 @@ const FIREBASE_CONFIG = {
   function check(email){
     if(!email){ denied('No email provided.'); return; }
     db.doc('whitelist/allowed').get({source:'server'}).then(s => {
-      const arr = (s.exists && Array.isArray(s.data().emails)) ? s.data().emails.map(e=>String(e).toLowerCase()) : [];
+      const arr = (s.exists && Array.isArray(s.data().email)) ? s.data().email.map(e=>String(e).toLowerCase()) : [];
       if(arr.includes(String(email).toLowerCase())) reveal(); else denied('Not whitelisted.');
     }).catch(e => { console.error(e); denied('Verification failed.'); });
   }

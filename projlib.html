@@ -315,17 +315,19 @@
 
 
 <script>
-const FIREBASE_CONFIG = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  appId: "YOUR_APP_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com"
+const firebaseConfig = {
+    apiKey: "AIzaSyC6ga0gUej6sDdamjiLfN_lOtawxho08XM",
+    authDomain: "projlibwl.firebaseapp.com",
+    projectId: "projlibwl",
+    //storageBucket: "projlibwl.appspot.com",
+    storageBucket: "projlibwl.firebasestorage.app",
+    messagingSenderId: "773208193586",
+    appId: "1:773208193586:web:cd4e3dceb7ce7517299a2b"
 };
-// const app = firebase.initializeApp(FIREBASE_CONFIG);
-// const appCheck = firebase.appCheck();
-// appCheck.activate('YOUR_RECAPTCHA_V3_SITE_KEY', true);
-// appCheck.setTokenAutoRefreshEnabled(true);
+const app = firebase.initializeApp(firebaseConfig);
+const appCheck = firebase.appCheck();
+appCheck.activate('6Ldg_6UrAAAAAPvb__4CRtyjKov5NzQXTNpb96MV', true);
+appCheck.setTokenAutoRefreshEnabled(true);
 </script>
 
 </head>
@@ -355,7 +357,7 @@ const FIREBASE_CONFIG = {
 
 <script>
 (function(){
-  const app = firebase.initializeApp(FIREBASE_CONFIG);
+  const app = firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
   function norm(v){ return String(v||'').toLowerCase().trim(); }
   function denied(msg){ const el=document.getElementById('gate-denied'); el.textContent=msg||'Access denied.'; el.style.display='block'; }

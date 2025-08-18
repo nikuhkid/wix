@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ProjLib — Gated (Wix)</title>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+
+<style>
+#gate-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0b0b16;color:#eaeaea;z-index:999999;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+#gate-card{padding:20px 24px;border-radius:14px;background:#151527;width:min(520px,92vw);box-shadow:0 10px 30px rgba(0,0,0,.45);text-align:center}
+#gate-title{font-weight:700;margin-bottom:6px}
+#gate-denied{display:none;color:#ff6b6b;margin-top:10px}
+#app{display:none}
+.gate-input{padding:10px 12px;border-radius:10px;border:1px solid #333;background:#0f0f1c;color:#eaeaea;width:100%;margin-top:10px}
+.gate-btn{border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+.gate-btn.primary{background:#4f46e5;color:#fff}
+#gate-actions{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+</style>
+
+
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ProjLib (Gated, Standalone)</title>
+
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ProjLib Beta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #181818;
+            color: #eee;
+            font-family: "Orbitron", sans-serif;
+            text-align: center;
+        }
+
+        body.light-theme {
+            background: #fff;
+            color: #222;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 90%;
+            max-width: 1500px;
+            margin: 20px auto;
+            padding: 24px;
+            background: rgba(20, 20, 40, 0.9);
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .select-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .select-container select,
+        button,
+        input[type="text"],
+        .select-container option,
+        label[for="useProxy"] {
+            font-family: "Orbitron", sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .select-container select {
+            background: #1a1a2e;
+            color: #fff;
+            border: 2px solid #ffcc00;
+            padding: 12px 40px;
+            border-radius: 25px;
+            transition: all 0.3s ease-in-out;
+            outline: none;
+            cursor: pointer;
+            text-align: center;
+            width: 200px;
+            box-sizing: border-box;
+        }
+
+        .select-container select:hover {
+            background: #505050;
+            color: #ffdd55;
+            border-color: #ffaa00;
+        }
+
+        .select-container i {
+            pointer-events: none;
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            font-size: 22px;
+        }
+
+        #anime-icon {
+            color: #a855f7;
+        }
+
+        #play-icon {
+            color: #3b82f6;
+        }
+
+        #read-icon {
+            color: #10b981;
+        }
+
+        #watch-icon {
+            color: #ef4444;
+        }
+
+        #daily-icon {
+            color: #f59e0b;
+        }
+
+        #brain-icon {
+            color: #ff6f61;
+        }
+
+        button {
+            background: #222244;
+            color: #fff;
+            border: 2px solid #ffcc00;
+            padding: 12px 18px;
+            border-radius: 25px;
+            transition: all 0.3s ease-in-out;
+            outline: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #9d00ff, #00d4ff);
+            box-shadow: 0px 0px 10px rgba(157, 0, 255, 0.5);
+        }
+
+        input[type="text"] {
+            background: #1a1a2e;
+            color: #fff;
+            border: 2px solid #ffcc00;
+            padding: 12px;
+            border-radius: 25px;
+            width: 450px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        input[type="text"]:hover {
+            background: #222244;
+            border-color: #ffaa00;
+        }
+
+        label[for="useProxy"] {
+            font-family: "Orbitron", sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: inherit;
+            margin-left: 10px;
+        }
+
+        #proxyFrame {
+            width: 1366px;
+            height: 768px;
+            border: 2px solid #00d4ff;
+            box-shadow: 0px 0px 15px rgba(0, 212, 255, 0.4);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .loadingOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loadingOverlay .spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #ffcc00;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        body.light-theme input[type="text"],
+        body.light-theme button,
+        body.light-theme select {
+            background: #eee;
+            color: #121212;
+            border: 2px solid #ffaa00;
+        }
+
+        body.light-theme button:hover,
+        body.light-theme input[type="text"]:hover,
+        body.light-theme select:hover {
+            background: #ddd;
+            color: #121212;
+            border-color: #ffaa00;
+        }
+
+        body.light-theme .ticker-container {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .ticker-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            position: fixed;
+            bottom: 0;
+            font-size: 16px;
+            padding: 10px;
+            color: #ffcc00;
+            background: #222;
+        }
+
+        .ticker {
+            display: inline-block;
+            animation: scrollTicker 30s linear infinite;
+        }
+
+        @keyframes scrollTicker {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        .form-group {
+            margin: 32px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px 28px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input[type="text"]#currentUrl {
+            background: transparent;
+            color: #aaa;
+            border: none;
+            font-size: 15px;
+            font-family: "Orbitron", sans-serif;
+            font-weight: 500;
+            width: 100%;
+            max-width: 1366px;
+            min-width: 300px;
+            padding: 6px 0 6px 8px;
+            margin-bottom: 8px;
+            outline: none;
+            box-shadow: none;
+            pointer-events: none;
+            text-align: center;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input[type="text"]#currentUrl:focus {
+            border: none;
+            outline: none;
+            background: transparent;
+        }
+    </style>
+
+
+
+
+<script>
+const FIREBASE_CONFIG = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  appId: "YOUR_APP_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com"
+};
+// const app = firebase.initializeApp(FIREBASE_CONFIG);
+// const appCheck = firebase.appCheck();
+// appCheck.activate('YOUR_RECAPTCHA_V3_SITE_KEY', true);
+// appCheck.setTokenAutoRefreshEnabled(true);
+</script>
+
+</head>
+<body>
+
+<div id="gate-overlay">
+  <div id="gate-card">
+    <div id="gate-title">Checking access…</div>
+    <div id="gate-sub">Private area. Authorization required.</div>
+    <div id="gate-denied">Access denied.</div>
+    <div id="gate-actions"></div>
+  </div>
+</div>
+
+<div id="app">
+<br>
+    <div class="container">
+        <h1 style="margin-bottom:20px">ProjLib Beta</h1>
+        <div class="row">
+            <div class="select-container"> <i id="brain-icon" class="ri-brain-line"></i> <select id="brain">
+                    <option value="">Brain Tease</option>
+                    <option value="https://www.mindgames.com/">Mind Games</option>
+                    <option value="https://www.brainzilla.com/">Brainzilla</option>
+                    <option value="https://www.puzzleprime.com/">Puzzle Prime</option>
+                </select>
+</div>
+
+<script>
+(function(){
+  const app = firebase.initializeApp(FIREBASE_CONFIG);
+  const db = firebase.firestore();
+  const allowedOrigins = ['https://YOUR_WIX_DOMAIN']; // set your Wix domain
+  function norm(v){ return String(v||'').toLowerCase().trim(); }
+  function denied(msg){ const el=document.getElementById('gate-denied'); el.textContent=msg||'Access denied.'; el.style.display='block'; }
+  function reveal(){ const ov=document.getElementById('gate-overlay'); if(ov) ov.remove(); document.getElementById('app').style.display='block'; }
+  function arrFromData(d){ if(!d) return []; if(Array.isArray(d.emails)) return d.emails; if(Array.isArray(d.email)) return d.email; return []; }
+  function check(email){
+    if(!email){ denied('No email received.'); return; }
+    db.doc('whitelist/allowed').get().then(s=>{
+      const arr = arrFromData(s.data()).map(norm);
+      if(arr.includes(norm(email))) reveal(); else denied('Not whitelisted.');
+    }).catch(e=>{ console.error(e); denied('Verification failed.'); });
+  }
+  const qs = new URLSearchParams(location.search);
+  const testEmail = qs.get('email');
+  if (testEmail){ check(testEmail); return; }
+  window.addEventListener('message', ev => {
+    if(!allowedOrigins.includes(ev.origin)) return;
+    try{ if(ev.data && ev.data.email) check(ev.data.email); else denied('No email received.'); } catch(e){ denied('Invalid message.'); }
+  });
+})();
+</script>
+
+</body>
+</html>

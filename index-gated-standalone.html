@@ -311,7 +311,7 @@
 
 
 <script>
-const firebaseConfig = {
+const FIREBASE_CONFIG = {
   apiKey: "AIzaSyC6ga0gUej6sDdamjiLfN_lOtawxho08XM",
   authDomain: "projlibwl.firebaseapp.com",
   projectId: "projlibwl",
@@ -320,7 +320,7 @@ const firebaseConfig = {
   appId: "1:773208193586:web:cd4e3dceb7ce7517299a2b"
 };
 // Enable App Check in Firebase Console and paste your site key here, then uncomment:
-const app = firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(FIREBASE_CONFIG);
 const appCheck = firebase.appCheck();
 appCheck.activate('6Ldg_6UrAAAAAPvb__4CRtyjKov5NzQXTNpb96MV', true);
 appCheck.setTokenAutoRefreshEnabled(true);
@@ -428,7 +428,7 @@ appCheck.setTokenAutoRefreshEnabled(true);
 
 <script>
 (function(){
-  const app = firebase.initializeApp(firebaseConfig);
+  const app = firebase.initializeApp(FIREBASE_CONFIG);
   const db = firebase.firestore();
   const $ = s => document.querySelector(s);
   const denied = (msg) => { $('#gate-denied').textContent = msg || 'Access denied.'; $('#gate-denied').style.display='block'; };

@@ -1,22 +1,44 @@
 {
-  "Media": [
-    { "title": "Movie 1", "url": "https://example.com/movie1" },
-    { "title": "Series 1", "url": "https://example.com/series1" }
+  "Watchables": [
+    { "title": "Free Worldwide TV", "url": "https://tv.garden" },
+    { "title": "Flixer", "url": "https://www.mindgames.com/" },
+    { "title": "HydraFlix", "url": "https://www.mindgames.com/" },
+    { "title": "CouchTuner", "url": "https://www.mindgames.com/" },
+    { "title": "WatchSeries", "url": "https://www.mindgames.com/" },
+    { "title": "Movie DB", "url": "https://www.mindgames.com/" },
+    { "title": "Sports", "url": "https://www.sports.com/" },
   ],
-  "Arcade Games": [
-    { "title": "Arcade 1", "url": "https://example.com/arcade1" },
-    { "title": "Arcade 2", "url": "https://example.com/arcade2" }
+  "Readables": [
+    { "title": "MangaHere", "url": "https://www.mangahere.cc/" },
+    { "title": "Manhwaden", "url": "https://www.manhwaden.com/" },
+    { "title": "ReadComicOnline", "url": "https://readcomiconline.li/" },
+    { "title": "Project Gutenberg", "url": "https://gutenberg.org/" },
+    { "title": "READanyBOOK", "url": "https://en.readanybook.com/" },
+    { "title": "ReadAllComics", "url": "https://readallcomics.com/" },
+    { "title": "TheBlackVault", "url": "https://www.theblackvault.com/documentarchive/" },
   ],
-  "Brain Teasers": [
-    { "title": "Puzzle 1", "url": "https://example.com/puzzle1" },
-    { "title": "Puzzle 2", "url": "https://example.com/puzzle2" }
+  "Animation": [
+    { "title": "Anitube", "url": "https://www.anitube.news/" },
+    { "title": "AniWatch", "url": "https://aniwatchtv.to/" },
+    { "title": "AniWave", "url": "https://aniwave.se/" },
+    { "title": "WCO", "url": "https://www.wco.com/" },
   ],
-  "Mangas & Comics": [
-    { "title": "Manga 1", "url": "https://example.com/manga1" },
-    { "title": "Comic 1", "url": "https://example.com/comic1" }
+  "Daily": [
+    { "title": "Termo", "url": "https://term.ooo/" },
+    { "title": "Bandle", "url": "https://bandle.app/daily" },
+    { "title": "Waffle", "url": "https://wordleplay.com/waffle" },
+    { "title": "Musicle", "url": "https://musicle.app" },
   ],
-  "Daily Games": [
-    { "title": "Loldle", "url": "https://loldle.net" },
-    { "title": "Wordle Clone", "url": "https://example.com/wordle" }
+  "Brain Teaser": [
+    { "title": "Mind Games", "url": "https://www.mindgames.com/" },
+    { "title": "Brainzilla", "url": "https://www.brainzilla.com/" },
+    { "title": "Puzzle Prime", "url": "https://www.puzzleprime.com/" },
+  ],
+  "Arcade": [
+    { "title": "NES Ninja", "url": "https://nesninja.com/" },
+    { "title": "IO Games", "url": "https://iogamesio.org/" },
+    { "title": "Emulators", "url": "https://gam.onl" },
+    { "title": "Poker", "url": "https://gameforge.com/en-US/littlegames/poker-with-friends/" },
+    { "title": "Cards Against Humanity", "url": "https://www.cardsagainstformality.io/" },
   ]
 }

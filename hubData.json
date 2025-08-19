@@ -27,8 +27,7 @@
       "links": [
         { "name": "Anitube", "url": "https://www.anitube.news/" },
         { "name": "AniWatch", "url": "https://aniwatchtv.to/" },
-        { "name": "AniWave", "url": "https://aniwave.se/" },
-        { "name": "WCO". "url": "https://wco.com/" }
+        { "name": "AniWave", "url": "https://aniwave.se/" }
       ]
     },
     {
@@ -70,8 +69,9 @@
   ],
   "blacklistedDomains": [
     "wix.com",
-    "bing.com",
-    "wco.com",
+    "google.com",
+    "youtube.com",
+    "facebook.com",
     "2ix2.com",
     "sporttvhdonlinetvs.com"
   ]

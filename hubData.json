@@ -1,34 +1,4 @@
 {
-  "Watchables": [
-    { "title": "Free Worldwide TV", "url": "https://tv.garden" },
-    { "title": "Flixer", "url": "https://flixer.su/" },
-    { "title": "HydraFlix", "url": "https://www.hydraflix.vip/" },
-    { "title": "CouchTuner", "url": "https://www.couchtuner.show/" },
-    { "title": "WatchSeries", "url": "https://watchseries.bar/" },
-    { "title": "Movie DB", "url": "https://moviedb.wiki/" },
-    { "title": "Sports", "url": "https://www.nflsupport.com/" }
-  ],
-  "Readables": [
-    { "title": "MangaHere", "url": "https://www.mangahere.cc/" },
-    { "title": "Manhwaden", "url": "https://www.manhwaden.com/" },
-    { "title": "ReadComicOnline", "url": "https://readcomiconline.li/" },
-    { "title": "Project Gutenberg", "url": "https://gutenberg.org/" },
-    { "title": "READanyBOOK", "url": "https://en.readanybook.com/" },
-    { "title": "ReadAllComics", "url": "https://readallcomics.com/" },
-    { "title": "TheBlackVault", "url": "https://www.theblackvault.com/documentarchive/" }
-  ],
-  "Animation": [
-    { "title": "Anitube", "url": "https://www.anitube.news/" },
-    { "title": "AniWatch", "url": "https://aniwatchtv.to/" },
-    { "title": "AniWave", "url": "https://aniwave.se/" },
-    { "title": "WCO", "url": "https://www.wco.com/" }
-  ],
-  "Daily": [
-    { "title": "Termo", "url": "https://term.ooo/" },
-    { "title": "Bandle", "url": "https://bandle.app/daily" },
-    { "title": "Waffle", "url": "https://wordleplay.com/waffle" },
-    { "title": "Musicle", "url": "https://musicle.app" }
-  ],
   "Brain Teaser": [
     { "title": "Mind Games", "url": "https://www.mindgames.com/" },
     { "title": "Brainzilla", "url": "https://www.brainzilla.com/" },
@@ -40,5 +10,35 @@
     { "title": "Emulators", "url": "https://gam.onl" },
     { "title": "Poker", "url": "https://gameforge.com/en-US/littlegames/poker-with-friends/" },
     { "title": "Cards Against Humanity", "url": "https://www.cardsagainstformality.io/" }
+  ],
+  "Animation": [
+    { "title": "Anitube", "url": "https://www.anitube.news/" },
+    { "title": "AniWatch", "url": "https://aniwatchtv.to/" },
+    { "title": "AniWave", "url": "https://aniwave.se/" },
+    { "title": "WCO", "url": "https://www.wco.com/" }
+  ],
+  "Readables": [
+    { "title": "MangaHere", "url": "https://www.mangahere.cc/" },
+    { "title": "Manhwaden", "url": "https://www.manhwaden.com/" },
+    { "title": "ReadComicOnline", "url": "https://readcomiconline.li/" },
+    { "title": "Project Gutenberg", "url": "https://gutenberg.org/" },
+    { "title": "READanyBOOK", "url": "https://en.readanybook.com/" },
+    { "title": "ReadAllComics", "url": "https://readallcomics.com/" },
+    { "title": "TheBlackVault", "url": "https://www.theblackvault.com/documentarchive/" }
+  ],
+  "Watchables": [
+    { "title": "Free Worldwide TV", "url": "https://tv.garden" },
+    { "title": "Flixer", "url": "https://flixer.su/" },
+    { "title": "HydraFlix", "url": "https://www.hydraflix.vip/" },
+    { "title": "CouchTuner", "url": "https://www.couchtuner.show/" },
+    { "title": "WatchSeries", "url": "https://watchseries.bar/" },
+    { "title": "Movie DB", "url": "https://moviedb.wiki/" },
+    { "title": "Sports", "url": "https://www.nflsupport.com/" }
+  ],
+  "Daily": [
+    { "title": "Termo", "url": "https://term.ooo/" },
+    { "title": "Bandle", "url": "https://bandle.app/daily" },
+    { "title": "Waffle", "url": "https://wordleplay.com/waffle" },
+    { "title": "Musicle", "url": "https://musicle.app" }
   ]
 }

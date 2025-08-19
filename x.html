@@ -379,7 +379,7 @@
         let t = (input || "").trim();
         if (!t) return;
 
-        if (!projLib.isValidUrl(t)) t = "https://swisscows.com/web?query=" + encodeURIComponent(t);
+        if (!projLib.isValidUrl(t)) t = "https://www.bing.com/search?q=" + encodeURIComponent(t);
         if (!t.startsWith("http://") && !t.startsWith("https://")) t = "https://" + t;
 
         document.getElementById("currentUrl").value = t;

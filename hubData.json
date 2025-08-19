@@ -1,11 +1,11 @@
 {
   "Watchables": [
     { "title": "Free Worldwide TV", "url": "https://tv.garden" },
-    { "title": "Flixer", "url": "https://www.mindgames.com/" },
-    { "title": "HydraFlix", "url": "https://www.mindgames.com/" },
-    { "title": "CouchTuner", "url": "https://www.mindgames.com/" },
-    { "title": "WatchSeries", "url": "https://www.mindgames.com/" },
-    { "title": "Movie DB", "url": "https://www.mindgames.com/" },
+    { "title": "Flixer", "url": "https://flixer.su/" },
+    { "title": "HydraFlix", "url": "https://www.hydraflix.vip/" },
+    { "title": "CouchTuner", "url": "https://www.couchtuner.show/" },
+    { "title": "WatchSeries", "url": "https://watchseries.bar/" },
+    { "title": "Movie DB", "url": "https://moviedb.wiki/" },
     { "title": "Sports", "url": "https://www.sports.com/" }
   ],
   "Readables": [

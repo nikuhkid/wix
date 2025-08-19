@@ -16,9 +16,26 @@
 </head>
 <body>
   <div class="container">
-    <h1 style="margin-bottom:20px">ProjLib Beta</h1>
+    <h1 style="margin-bottom:10px">ProjLib Beta</h1>
 
-    <div class="row">
+    <!-- Tab masking dropdown -->
+    <div class="tab-mask-container">
+      <i class="ri-eye-off-line" style="color:#888"></i>
+      <select id="maskTab">
+        <option value="">Tab Masking</option>
+        <option value="Gmail|https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico">Gmail</option>
+        <option value="Google|https://www.google.com/favicon.ico">Google Search</option>
+        <option value="Microsoft Teams|https://statics.teams.cdn.office.net/hashed/favicon.ico">Microsoft Teams</option>
+        <option value="Google Docs|https://ssl.gstatic.com/docs/doclist/images/infinite_arrow_favicon_5.ico">Google Docs</option>
+        <option value="Google Sheets|https://ssl.gstatic.com/docs/spreadsheets/favicon3.ico">Google Sheets</option>
+        <option value="Google Calendar|https://calendar.google.com/googlecalendar/images/favicons_2020q4/calendar_3_2.ico">Google Calendar</option>
+        <option value="Notion|https://www.notion.so/front-static/favicon.ico">Notion</option>
+        <option value="Evernote|https://evernote.com/favicon.ico">Evernote</option>
+      </select>
+    </div>
+
+    <!-- Dropdowns row -->
+    <div class="row dropdowns-container">
       <div class="select-container">
         <i id="brain-icon" class="ri-brain-line"></i>
         <select id="brain"></select>
@@ -45,35 +62,22 @@
       </div>
     </div>
 
-    <div class="top-bar">
-      <button type="button" id="toggleTheme">Theme: Dark</button>
-    </div>
-
-    <div class="form-group">
+    <!-- Buttons row -->
+    <div class="form-group buttons-container">
       <button type="button" id="homeBtn">Home</button>
-      <form id="proxyForm">
+      <form id="proxyForm" style="display:inline-block">
         <input type="text" id="urlInput" placeholder="Enter website URL or search term" />
         <button type="submit">Browse</button>
       </form>
       <button type="button" id="refreshBtn">Refresh</button>
-      <div class="select-container">
-        <i class="ri-eye-off-line" style="color:#888"></i>
-        <select id="maskTab">
-          <option value="">Tab Masking</option>
-          <option value="Gmail|https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico">Gmail</option>
-          <option value="Google|https://www.google.com/favicon.ico">Google Search</option>
-          <option value="Microsoft Teams|https://statics.teams.cdn.office.net/hashed/favicon.ico">Microsoft Teams</option>
-          <option value="Google Docs|https://ssl.gstatic.com/docs/doclist/images/infinite_arrow_favicon_5.ico">Google Docs</option>
-          <option value="Google Sheets|https://ssl.gstatic.com/docs/spreadsheets/favicon3.ico">Google Sheets</option>
-          <option value="Google Calendar|https://calendar.google.com/googlecalendar/images/favicons_2020q4/calendar_3_2.ico">Google Calendar</option>
-          <option value="Notion|https://www.notion.so/front-static/favicon.ico">Notion</option>
-          <option value="Evernote|https://evernote.com/favicon.ico">Evernote</option>
-        </select>
-      </div>
+      <button type="button" id="toggleTheme">Theme</button>
     </div>
 
+    <!-- Current URL bar -->
+    <input type="text" id="currentUrl" readonly placeholder="Current URL" />
+
+    <!-- Proxy container -->
     <div id="proxyContainer">
-      <input type="text" id="currentUrl" readonly placeholder="Current URL" />
       <div id="initialMessage">
         <div style="text-align:center;color:white">
           <i class="ri-global-line" style="font-size:48px;color:#555"></i>
@@ -81,10 +85,12 @@
           <p>Enter a URL or click one of the dropdowns to load a website.</p>
         </div>
       </div>
+
       <div id="loadingOverlay" class="loadingOverlay">
         <div class="spinner"></div>
       </div>
-      <iframe id="proxyFrame" allowfullscreen sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
+
+      <iframe id="proxyFrame" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
     </div>
   </div>
 
@@ -94,7 +100,6 @@
 
   <div id="notification"></div>
 
-  <!-- App logic -->
   <script src="js/app.js"></script>
 </body>
 </html>

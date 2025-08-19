@@ -45,16 +45,35 @@
       </div>
     </div>
 
-    <div class="form-group" style="margin:20px 0">
-      <button type="button" id="homeBtn">Home</button>
-      <form id="proxyForm" style="display:inline-block">
-        <input type="text" id="urlInput" placeholder="Enter website URL or search term" style="width:450px" />
-        <button type="submit">Browse</button>
-      </form>
-      <button type="button" id="refreshBtn">Refresh</button>
-      <button type="button" onclick="projLib.fullscreenProxy()">Fullscreen</button>
-      <button type="button" id="toggleTheme">Toggle Theme</button>
-    </div>
+    <!-- New top bar, right-aligned -->
+<div class="top-bar">
+  <button type="button" id="toggleTheme">Toggle Theme</button>
+</div>
+
+<div class="form-group" style="margin:20px 0">
+  <button type="button" id="homeBtn">Home</button>
+  <form id="proxyForm" style="display:inline-block">
+    <input type="text" id="urlInput" placeholder="Enter website URL or search term" style="width:450px" />
+    <button type="submit">Browse</button>
+  </form>
+  <button type="button" id="refreshBtn">Refresh</button>
+
+  <!-- Theme button removed from here, replaced with Disguise dropdown -->
+  <div class="select-container">
+    <i class="ri-eye-off-line" style="color:#888"></i>
+    <select id="maskTab">
+      <option value="">Tab Masking</option>
+      <option value="Gmail|https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico">Gmail</option>
+      <option value="Google|https://www.google.com/favicon.ico">Google Search</option>
+      <option value="Microsoft Teams|https://statics.teams.cdn.office.net/hashed/favicon.ico">Microsoft Teams</option>
+      <option value="Google Docs|https://ssl.gstatic.com/docs/doclist/images/infinite_arrow_favicon_5.ico">Google Docs</option>
+      <option value="Google Sheets|https://ssl.gstatic.com/docs/spreadsheets/favicon3.ico">Google Sheets</option>
+      <option value="Google Calendar|https://calendar.google.com/googlecalendar/images/favicons_2020q4/calendar_3_2.ico">Google Calendar</option>
+      <option value="Notion|https://www.notion.so/front-static/favicon.ico">Notion</option>
+      <option value="Evernote|https://evernote.com/favicon.ico">Evernote</option>
+    </select>
+  </div>
+</div>
 
     <div id="proxyContainer" style="position:relative;margin-top:20px;">
       <input type="text" id="currentUrl" readonly placeholder="Current URL" />

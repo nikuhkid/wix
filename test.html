@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <title>Gmail</title>
-  <link rel="icon" href="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" type="image/x-icon">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ProjLib Hub - Reorganized</title>
+<title>Gmail</title>
+<link rel="icon" href="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" type="image/x-icon">
 <style>
   body { margin:0; font-family:'Segoe UI', sans-serif; background:#0f0f0f; color:#eee; transition:all 0.5s; display:flex; }
   #sidebar { width:200px; background:#111; padding:20px 10px; box-shadow:2px 0 5px rgba(0,0,0,0.5); position:fixed; height:100vh; overflow:auto; }
@@ -18,8 +17,8 @@
   section { margin-bottom:40px; scroll-margin-top:60px; }
   section h2 { margin-bottom:10px; font-size:1.4rem; border-bottom:2px solid #555; padding-bottom:5px; display:flex; align-items:center; }
   section h2 span { margin-right:10px; }
-  .tiles { display:flex; flex-wrap:wrap; gap:15px; }
-  .tile { flex:1 1 150px; min-width:120px; height:180px; background:#222; display:flex; align-items:center; justify-content:center; color:#eee; text-align:center; font-weight:bold; cursor:pointer; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.5); transition: all 0.3s; perspective: 1000px; }
+  .tiles { display:flex; flex-wrap:wrap; gap:15px; justify-content:flex-start; }
+  .tile { flex: 1 1 calc(25% - 15px); min-width:120px; height:150px; background:#222; display:flex; align-items:center; justify-content:center; color:#eee; text-align:center; font-weight:bold; cursor:pointer; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.5); transition: all 0.3s; perspective: 1000px; }
   .tile:hover { transform: rotateX(5deg) rotateY(5deg) scale(1.05); box-shadow:0 0 15px #0ff; }
 
   iframe { width:100%; height:500px; border:none; margin-top:20px; border-radius:8px; }
@@ -28,7 +27,6 @@
   #themeBtn { padding:5px 12px; cursor:pointer; border:none; border-radius:4px; background:#222; color:#eee; font-weight:bold; transition:0.3s; }
   #themeBtn:hover { background:#444; }
 
-  /* Themes */
   body[data-theme="default"] { background:#0f0f0f; color:#eee; }
   body[data-theme="dark"] { background:#111; color:#ccc; }
   body[data-theme="kuromi"] { background:#f6e6ff; color:#330033; }
@@ -36,29 +34,16 @@
   body[data-theme="retro"] { background:#1a1a1a; color:#ffea00; font-family:'Press Start 2P', monospace; }
   body[data-theme="mystic"] { background:#fafafa; color:#333; }
 
-  body[data-theme="kuromi"] .tile { background:#d6b3ff; color:#330033; }
-  body[data-theme="cyberpunk"] .tile { background:#222; color:#0ff; box-shadow:0 0 5px #0ff; }
-  body[data-theme="retro"] .tile { background:#333; color:#ffea00; font-family:'Press Start 2P', monospace; }
-  body[data-theme="mystic"] .tile { background:#eee; color:#333; }
-
-  @media(max-width:768px){
-    #sidebar{position:relative;width:100%;height:auto;display:flex;overflow-x:auto;}
-    main{margin-left:0;margin-top:60px;}
-    header{left:0;}
-  }
+  @media(max-width:1024px){ .tile { flex: 1 1 calc(33% - 15px); } }
+  @media(max-width:768px){ .tile { flex: 1 1 calc(50% - 15px); } #sidebar{position:relative;width:100%;height:auto;display:flex;overflow-x:auto;} main{margin-left:0;margin-top:60px;} header{left:0;} }
+  @media(max-width:480px){ .tile { flex: 1 1 100%; } }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body data-theme="default">
 
-<div id="sidebar">
-  <ul id="sidebarList"></ul>
-</div>
-
-<header>
-  <button id="themeBtn">Change Theme</button>
-</header>
-
+<div id="sidebar"><ul id="sidebarList"></ul></div>
+<header><button id="themeBtn">Change Theme</button></header>
 <main id="mainContent"></main>
 <iframe id="previewIframe"></iframe>
 
@@ -70,64 +55,54 @@ document.getElementById("themeBtn").addEventListener("click",()=>{
   document.body.dataset.theme=themes[currentTheme];
 });
 
-// Hub data
-const hubData = {
-  "Media": [ {title:"Movie 1",url:"https://example.com/movie1"}, {title:"Series 1",url:"https://example.com/series1"} ],
-  "Arcade Games": [ {title:"Arcade 1",url:"https://example.com/arcade1"}, {title:"Arcade 2",url:"https://example.com/arcade2"} ],
-  "Brain Teasers": [ {title:"Puzzle 1",url:"https://example.com/puzzle1"}, {title:"Puzzle 2",url:"https://example.com/puzzle2"} ],
-  "Mangas & Comics": [ {title:"Manga 1",url:"https://example.com/manga1"}, {title:"Comic 1",url:"https://example.com/comic1"} ],
-  "Daily Games": [ {title:"Loldle",url:"https://loldle.net"}, {title:"Wordle Clone",url:"https://example.com/wordle"} ]
-};
-
 const main=document.getElementById("mainContent");
 const iframe=document.getElementById("previewIframe");
 const sidebarList=document.getElementById("sidebarList");
 const categoryIcons={"Media":"🎬","Arcade Games":"🕹️","Brain Teasers":"🧩","Mangas & Comics":"📚","Daily Games":"🎯"};
 
-// Generate sections and sidebar
-for(const sectionName in hubData){
-  const section=document.createElement("section");
-  section.id=sectionName;
-  const header=document.createElement("h2");
-  const iconSpan=document.createElement("span");
-  iconSpan.textContent=categoryIcons[sectionName]||"";
-  header.appendChild(iconSpan);
-  header.appendChild(document.createTextNode(sectionName));
-  section.appendChild(header);
+fetch('hubData.json')
+  .then(res=>res.json())
+  .then(hubData=>{
+    // Generate sections and sidebar
+    for(const sectionName in hubData){
+      const section=document.createElement("section");
+      section.id=sectionName;
+      const header=document.createElement("h2");
+      const iconSpan=document.createElement("span");
+      iconSpan.textContent=categoryIcons[sectionName]||"";
+      header.appendChild(iconSpan);
+      header.appendChild(document.createTextNode(sectionName));
+      section.appendChild(header);
 
-  const tileContainer=document.createElement("div");
-  tileContainer.className="tiles";
-  hubData[sectionName].forEach(item=>{
-    const tile=document.createElement("div");
-    tile.className="tile";
-    tile.textContent=item.title;
-    tile.dataset.url=item.url;
-    tile.addEventListener("click",()=>{iframe.src=item.url;iframe.scrollIntoView({behavior:"smooth"});});
-    tileContainer.appendChild(tile);
-  });
-  section.appendChild(tileContainer);
-  main.appendChild(section);
+      const tileContainer=document.createElement("div");
+      tileContainer.className="tiles";
+      hubData[sectionName].forEach(item=>{
+        const tile=document.createElement("div");
+        tile.className="tile";
+        tile.textContent=item.title;
+        tile.dataset.url=item.url;
+        tile.addEventListener("click",()=>{iframe.src=item.url;iframe.scrollIntoView({behavior:"smooth"});});
+        tileContainer.appendChild(tile);
+      });
+      section.appendChild(tileContainer);
+      main.appendChild(section);
 
-  // Sidebar
-  const li=document.createElement("li");
-  li.innerHTML=`<span>${categoryIcons[sectionName]||""}</span>${sectionName}`;
-  li.addEventListener("click",()=>{document.getElementById(sectionName).scrollIntoView({behavior:"smooth"});});
-  sidebarList.appendChild(li);
-}
+      // Sidebar
+      const li=document.createElement("li");
+      li.innerHTML=`<span>${categoryIcons[sectionName]||""}</span>${sectionName}`;
+      li.addEventListener("click",()=>{document.getElementById(sectionName).scrollIntoView({behavior:"smooth"});});
+      sidebarList.appendChild(li);
+    }
 
-// Highlight sidebar on scroll
-window.addEventListener("scroll",()=>{
-  const sections=document.querySelectorAll("main section");
-  let current="";
-  sections.forEach(sec=>{
-    const top=sec.offsetTop-60;
-    if(window.scrollY>=top) current=sec.id;
-  });
-  document.querySelectorAll("#sidebar li").forEach(li=>{
-    li.classList.remove("active");
-    if(li.textContent.includes(current)) li.classList.add("active");
-  });
-});
+    // Highlight sidebar on scroll
+    window.addEventListener("scroll",()=>{
+      const sections=document.querySelectorAll("main section");
+      let current="";
+      sections.forEach(sec=>{ const top=sec.offsetTop-60; if(window.scrollY>=top) current=sec.id; });
+      document.querySelectorAll("#sidebar li").forEach(li=>{ li.classList.remove("active"); if(li.textContent.includes(current)) li.classList.add("active"); });
+    });
+  })
+  .catch(err=>console.error("Failed to load hubData.json:", err));
 </script>
 </body>
 </html>

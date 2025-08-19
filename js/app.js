@@ -253,6 +253,26 @@
         ev.target.selectedIndex = 0;
       }
     });
+    // Tab masking change handler
+document.getElementById("maskTab").addEventListener("change", function (ev) {
+  if (!ev.target.value) return;
+  const [title, iconUrl] = ev.target.value.split("|");
+
+  // Change tab title
+  document.title = title;
+
+  // Swap favicon
+  let link = document.querySelector("link[rel~='icon']");
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "icon";
+    document.head.appendChild(link);
+  }
+  link.href = iconUrl;
+
+  ev.target.selectedIndex = 0; // Reset dropdown
+});
+
 
     document.getElementById("toggleTheme").addEventListener("click", projLib.toggleTheme);
   });

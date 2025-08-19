@@ -1,1 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ProjLib Beta</title>
 
+  <!-- Fonts and icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet" />
+
+  <!-- App styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1 style="margin-bottom:20px">ProjLib Beta</h1>
+
+    <div class="row">
+      <div class="select-container">
+        <i id="brain-icon" class="ri-brain-line"></i>
+        <select id="brain"></select>
+      </div>
+      <div class="select-container">
+        <i id="play-icon" class="ri-gamepad-line"></i>
+        <select id="play"></select>
+      </div>
+      <div class="select-container">
+        <i id="anime-icon" class="ri-movie-line"></i>
+        <select id="anime"></select>
+      </div>
+      <div class="select-container">
+        <i id="read-icon" class="ri-book-open-line"></i>
+        <select id="read"></select>
+      </div>
+      <div class="select-container">
+        <i id="watch-icon" class="ri-video-line"></i>
+        <select id="watch"></select>
+      </div>
+      <div class="select-container">
+        <i id="daily-icon" class="ri-calendar-line"></i>
+        <select id="daily"></select>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin:20px 0">
+      <button type="button" id="homeBtn">Home</button>
+      <form id="proxyForm" style="display:inline-block">
+        <input type="text" id="urlInput" placeholder="Enter website URL or search term" style="width:450px" />
+        <button type="submit">Browse</button>
+      </form>
+      <button type="button" id="refreshBtn">Refresh</button>
+      <button type="button" onclick="projLib.fullscreenProxy()">Fullscreen</button>
+      <button type="button" id="toggleTheme">Toggle Theme</button>
+    </div>
+
+    <div id="proxyContainer" style="position:relative;margin-top:20px;">
+      <input type="text" id="currentUrl" readonly placeholder="Current URL" />
+      <div id="initialMessage" style="padding:20px;min-height:600px;display:flex;align-items:center;justify-content:center">
+        <div style="text-align:center;color:white">
+          <i class="ri-global-line" style="font-size:48px;color:#555"></i>
+          <h3>No Website Loaded</h3>
+          <p>Enter a URL or click one of the dropdowns to load a website.</p>
+        </div>
+      </div>
+
+      <div id="loadingOverlay" class="loadingOverlay">
+        <div class="spinner"></div>
+      </div>
+
+      <iframe id="proxyFrame" allowfullscreen referrerpolicy="no-referrer"></iframe>
+    </div>
+  </div>
+
+  <div class="ticker-container">
+    <div class="ticker">Latest news: Loading...</div>
+  </div>
+
+  <div id="notification" style="display: none;"></div>
+
+  <!-- App logic -->
+  <script src="js/app.js"></script>
+</body>
+</html>

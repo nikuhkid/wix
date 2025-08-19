@@ -1,44 +1,78 @@
 {
-  "Brain Teaser": [
-    { "title": "Mind Games", "url": "https://www.mindgames.com/" },
-    { "title": "Brainzilla", "url": "https://www.brainzilla.com/" },
-    { "title": "Puzzle Prime", "url": "https://www.puzzleprime.com/" }
+  "defaultHome": "https://archive.org",
+  "categories": [
+    {
+      "id": "brain",
+      "label": "Brain Tease",
+      "links": [
+        { "name": "Mind Games", "url": "https://www.mindgames.com/" },
+        { "name": "Brainzilla", "url": "https://www.brainzilla.com/" },
+        { "name": "Puzzle Prime", "url": "https://www.puzzleprime.com/" }
+      ]
+    },
+    {
+      "id": "play",
+      "label": "Arcade",
+      "links": [
+        { "name": "NES Ninja", "url": "https://nesninja.com/" },
+        { "name": "IO Games", "url": "https://iogamesio.org/" },
+        { "name": "Emulators", "url": "https://gam.onl" },
+        { "name": "Poker", "url": "https://gameforge.com/en-US/littlegames/poker-with-friends/" },
+        { "name": "Cards Against Humanity", "url": "https://www.cardsagainstformality.io/" }
+      ]
+    },
+    {
+      "id": "anime",
+      "label": "Animation",
+      "links": [
+        { "name": "Anitube", "url": "https://www.anitube.news/" },
+        { "name": "AniWatch", "url": "https://aniwatchtv.to/" },
+        { "name": "AniWave", "url": "https://aniwave.se/" },
+        { "name": "WCO". "url": "https://wco.com/" }
+      ]
+    },
+    {
+      "id": "read",
+      "label": "Readable",
+      "links": [
+        { "name": "MangaHere", "url": "https://www.mangahere.cc/" },
+        { "name": "Manhwaden", "url": "https://www.manhwaden.com/" },
+        { "name": "ReadComicOnline", "url": "https://readcomiconline.li/" },
+        { "name": "Project Gutenberg", "url": "https://gutenberg.org/" },
+        { "name": "READanyBOOK", "url": "https://en.readanybook.com/" },
+        { "name": "ReadAllComics", "url": "https://readallcomics.com/" },
+        { "name": "TheBlackVault", "url": "https://www.theblackvault.com/documentarchive/" }
+      ]
+    },
+    {
+      "id": "watch",
+      "label": "Watchable",
+      "links": [
+        { "name": "Free Worldwide TV", "url": "https://tv.garden" },
+        { "name": "Flixer", "url": "https://flixer.su/" },
+        { "name": "CouchTuner", "url": "https://www.couchtuner.show/" },
+        { "name": "Movie DB", "url": "https://moviedb.wiki/" },
+        { "name": "HydraFlix", "url": "https://www.hydraflix.vip/" },
+        { "name": "WatchSeries", "url": "https://watchseries.bar/" },
+        { "name": "Sports", "url": "https://nflsupport.com/" }
+      ]
+    },
+    {
+      "id": "daily",
+      "label": "Dailies",
+      "links": [
+        { "name": "Termo", "url": "https://term.ooo/" },
+        { "name": "Bandle", "url": "https://bandle.app/daily" },
+        { "name": "Waffle", "url": "https://wordleplay.com/waffle" },
+        { "name": "Musicle", "url": "https://musicle.app" }
+      ]
+    }
   ],
-  "Arcade": [
-    { "title": "NES Ninja", "url": "https://nesninja.com/" },
-    { "title": "IO Games", "url": "https://iogamesio.org/" },
-    { "title": "Emulators", "url": "https://gam.onl" },
-    { "title": "Poker", "url": "https://gameforge.com/en-US/littlegames/poker-with-friends/" },
-    { "title": "Cards Against Humanity", "url": "https://www.cardsagainstformality.io/" }
-  ],
-  "Animation": [
-    { "title": "Anitube", "url": "https://www.anitube.news/" },
-    { "title": "AniWatch", "url": "https://aniwatchtv.to/" },
-    { "title": "AniWave", "url": "https://aniwave.se/" },
-    { "title": "WCO", "url": "https://www.wco.com/" }
-  ],
-  "Readables": [
-    { "title": "MangaHere", "url": "https://www.mangahere.cc/" },
-    { "title": "Manhwaden", "url": "https://www.manhwaden.com/" },
-    { "title": "ReadComicOnline", "url": "https://readcomiconline.li/" },
-    { "title": "Project Gutenberg", "url": "https://gutenberg.org/" },
-    { "title": "READanyBOOK", "url": "https://en.readanybook.com/" },
-    { "title": "ReadAllComics", "url": "https://readallcomics.com/" },
-    { "title": "TheBlackVault", "url": "https://www.theblackvault.com/documentarchive/" }
-  ],
-  "Watchables": [
-    { "title": "Free Worldwide TV", "url": "https://tv.garden" },
-    { "title": "Flixer", "url": "https://flixer.su/" },
-    { "title": "HydraFlix", "url": "https://www.hydraflix.vip/" },
-    { "title": "CouchTuner", "url": "https://www.couchtuner.show/" },
-    { "title": "WatchSeries", "url": "https://watchseries.bar/" },
-    { "title": "Movie DB", "url": "https://moviedb.wiki/" },
-    { "title": "Sports", "url": "https://www.nflsupport.com/" }
-  ],
-  "Daily": [
-    { "title": "Termo", "url": "https://term.ooo/" },
-    { "title": "Bandle", "url": "https://bandle.app/daily" },
-    { "title": "Waffle", "url": "https://wordleplay.com/waffle" },
-    { "title": "Musicle", "url": "https://musicle.app" }
+  "blacklistedDomains": [
+    "wix.com",
+    "bing.com",
+    "wco.com",
+    "2ix2.com",
+    "sporttvhdonlinetvs.com"
   ]
 }

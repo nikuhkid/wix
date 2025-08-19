@@ -18,24 +18,20 @@
   <div class="container">
     <h1 style="margin-bottom:10px">ProjLib Beta</h1>
 
-    <!-- Tab masking dropdown -->
-    <div class="tab-mask-container">
+    <!-- Tab Masking below title -->
+    <div class="tab-masking">
       <i class="ri-eye-off-line" style="color:#888"></i>
       <select id="maskTab">
         <option value="">Tab Masking</option>
         <option value="Gmail|https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico">Gmail</option>
         <option value="Google|https://www.google.com/favicon.ico">Google Search</option>
         <option value="Microsoft Teams|https://statics.teams.cdn.office.net/hashed/favicon.ico">Microsoft Teams</option>
-        <option value="Google Docs|https://ssl.gstatic.com/docs/doclist/images/infinite_arrow_favicon_5.ico">Google Docs</option>
-        <option value="Google Sheets|https://ssl.gstatic.com/docs/spreadsheets/favicon3.ico">Google Sheets</option>
-        <option value="Google Calendar|https://calendar.google.com/googlecalendar/images/favicons_2020q4/calendar_3_2.ico">Google Calendar</option>
         <option value="Notion|https://www.notion.so/front-static/favicon.ico">Notion</option>
-        <option value="Evernote|https://evernote.com/favicon.ico">Evernote</option>
       </select>
     </div>
 
     <!-- Dropdowns row -->
-    <div class="row dropdowns-container">
+    <div class="dropdowns-container row">
       <div class="select-container">
         <i id="brain-icon" class="ri-brain-line"></i>
         <select id="brain"></select>
@@ -63,22 +59,22 @@
     </div>
 
     <!-- Buttons row -->
-    <div class="form-group buttons-container">
+    <div class="buttons-container form-group">
       <button type="button" id="homeBtn">Home</button>
       <form id="proxyForm" style="display:inline-block">
         <input type="text" id="urlInput" placeholder="Enter website URL or search term" />
         <button type="submit">Browse</button>
       </form>
       <button type="button" id="refreshBtn">Refresh</button>
-      <button type="button" id="toggleTheme">Theme</button>
+      <button type="button" id="toggleTheme">Change Theme</button>
     </div>
 
-    <!-- Current URL bar -->
+    <!-- Current URL -->
     <input type="text" id="currentUrl" readonly placeholder="Current URL" />
 
-    <!-- Proxy container -->
-    <div id="proxyContainer">
-      <div id="initialMessage">
+    <!-- Proxy / iframe -->
+    <div id="proxyContainer" style="position:relative;margin-top:20px;">
+      <div id="initialMessage" style="padding:20px;min-height:600px;display:flex;align-items:center;justify-content:center">
         <div style="text-align:center;color:white">
           <i class="ri-global-line" style="font-size:48px;color:#555"></i>
           <h3>No Website Loaded</h3>
@@ -90,7 +86,7 @@
         <div class="spinner"></div>
       </div>
 
-      <iframe id="proxyFrame" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
+      <iframe id="proxyFrame" sandbox="allow-forms allow-scripts allow-same-origin allow-popups" allowfullscreen></iframe>
     </div>
   </div>
 

@@ -479,7 +479,7 @@
         setInterval(projLib.updateTicker, 600000);
 
         // Load hub data then initialize UI
-        projLib.loadHubData("./hubData.json").then(data => {
+        projLib.loadHubData("hubData.json").then(data => {
           projLib.populateDropdowns(data);
           projLib.processLoadUrl(DEFAULT_HOME);
         });

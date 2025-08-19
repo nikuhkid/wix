@@ -1,0 +1,22 @@
+{
+  "Media": [
+    { "title": "Movie 1", "url": "https://example.com/movie1" },
+    { "title": "Series 1", "url": "https://example.com/series1" }
+  ],
+  "Arcade Games": [
+    { "title": "Arcade 1", "url": "https://example.com/arcade1" },
+    { "title": "Arcade 2", "url": "https://example.com/arcade2" }
+  ],
+  "Brain Teasers": [
+    { "title": "Puzzle 1", "url": "https://example.com/puzzle1" },
+    { "title": "Puzzle 2", "url": "https://example.com/puzzle2" }
+  ],
+  "Mangas & Comics": [
+    { "title": "Manga 1", "url": "https://example.com/manga1" },
+    { "title": "Comic 1", "url": "https://example.com/comic1" }
+  ],
+  "Daily Games": [
+    { "title": "Loldle", "url": "https://loldle.net" },
+    { "title": "Wordle Clone", "url": "https://example.com/wordle" }
+  ]
+}

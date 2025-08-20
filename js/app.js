@@ -53,7 +53,26 @@
 
   projLib.populateDropdowns=function(data){
     if(!data||!Array.isArray(data.categories))return;
-    data.categories.forEach(cat=>{const select=document.getElementById(cat.id);if(!select)return;select.innerHTML='';const placeholder=document.createElement('option');placeholder.value='';placeholder.textContent=cat.label||'Select';select.appendChild(placeholder);if(Array.isArray(cat.links)){const frag=document.createDocumentFragment();cat.links.forEach(link=>{if(!link||!link.url||!link.name)return;const opt=document.createElement('option');opt.value=link.url;opt.textContent=link.name;frag.appendChild(opt);});select.appendChild(frag);});};
+    data.categories.forEach(cat=>{
+      const select=document.getElementById(cat.id);
+      if(!select) return;
+      select.innerHTML='';
+      const placeholder=document.createElement('option');
+      placeholder.value='';
+      placeholder.textContent=cat.label||'Select';
+      select.appendChild(placeholder);
+      if(Array.isArray(cat.links)){
+        const frag=document.createDocumentFragment();
+        cat.links.forEach(link=>{
+          if(!link||!link.url||!link.name) return;
+          const opt=document.createElement('option');
+          opt.value=link.url;
+          opt.textContent=link.name;
+          frag.appendChild(opt);
+        });
+        select.appendChild(frag);
+      }
+    });
   };
 
   // ---------- Boot ----------

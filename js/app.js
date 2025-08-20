@@ -25,13 +25,46 @@
   projLib.notifyUser=function(msg){const t=document.getElementById('notification');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4000);};
   projLib.applyTheme=function(mode){THEME_LIST.forEach(t=>document.body.classList.remove('theme-'+t));document.body.classList.add('theme-'+mode);};
 
+  // --- Comic theme click handler ---
+  let comicClickHandler = null;
   function triggerThemeEffects(theme){
     const container=document.querySelector('.container');
-    if(theme==='kuromi'){const spark=document.createElement('div');spark.className='kuromi-spark';spark.style.left=Math.random()*container.offsetWidth+'px';spark.style.top=Math.random()*container.offsetHeight+'px';container.appendChild(spark);setTimeout(()=>spark.remove(),2000);}
-    else if(theme==='comic'){container.addEventListener('click',function(e){const pop=document.createElement('div');pop.className='comic-pop';pop.style.left=e.offsetX+'px';pop.style.top=e.offsetY+'px';pop.textContent=Math.random()<0.5?'POW!':'BAM!';container.appendChild(pop);setTimeout(()=>pop.remove(),600);});}
+    // Remove previous comic click handler if any
+    if(comicClickHandler) {
+      container.removeEventListener('click', comicClickHandler);
+      comicClickHandler = null;
+    }
+    if(theme==='kuromi'){
+      const spark=document.createElement('div');
+      spark.className='kuromi-spark';
+      spark.style.left=Math.random()*container.offsetWidth+'px';
+      spark.style.top=Math.random()*container.offsetHeight+'px';
+      container.appendChild(spark);
+      setTimeout(()=>spark.remove(),2000);
+    }
+    else if(theme==='comic'){
+      comicClickHandler = function(e){
+        const pop=document.createElement('div');
+        pop.className='comic-pop';
+        pop.style.left=e.offsetX+'px';
+        pop.style.top=e.offsetY+'px';
+        pop.textContent=Math.random()<0.5?'POW!':'BAM!';
+        container.appendChild(pop);
+        setTimeout(()=>pop.remove(),600);
+      };
+      container.addEventListener('click', comicClickHandler);
+    }
   }
 
-  projLib.toggleTheme=function(){themeIndex=(themeIndex+1)%THEME_LIST.length;const theme=THEME_LIST[themeIndex];projLib.applyTheme(theme);triggerThemeEffects(theme);};
+  projLib.toggleTheme=function(){
+    themeIndex=(themeIndex+1)%THEME_LIST.length;
+    const theme=THEME_LIST[themeIndex];
+    projLib.applyTheme(theme);
+    triggerThemeEffects(theme);
+    // Update theme button text
+    const btn = document.getElementById('toggleThemeBtn');
+    if(btn) btn.textContent = 'Theme: ' + theme.charAt(0).toUpperCase() + theme.slice(1);
+  };
 
   // ---------- Iframe ----------
   projLib.processLoadUrl=function(input){
@@ -78,7 +111,14 @@
   // ---------- Boot ----------
   document.addEventListener('DOMContentLoaded',function(){
     // Theme
-    let theme=localStorage.getItem('theme');if(!theme||!THEME_LIST.includes(theme))theme='dark';themeIndex=THEME_LIST.indexOf(theme);projLib.applyTheme(theme);triggerThemeEffects(theme);
+  let theme=localStorage.getItem('theme');
+  if(!theme||!THEME_LIST.includes(theme)) theme='dark';
+  themeIndex=THEME_LIST.indexOf(theme);
+  projLib.applyTheme(theme);
+  triggerThemeEffects(theme);
+  // Set initial theme button text
+  const btn = document.getElementById('toggleThemeBtn');
+  if(btn) btn.textContent = 'Theme: ' + theme.charAt(0).toUpperCase() + theme.slice(1);
 
     // Ticker
     projLib.updateTicker();setInterval(projLib.updateTicker,600000);

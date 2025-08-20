@@ -281,6 +281,13 @@ input[type="text"],
   box-shadow:0px 0px 10px rgba(157,0,255,0.5);
   color:#fff;
 }
+/* Ensure selects and inputs inherit per-theme button hover styles */
+body.theme-geek .select-container select, body.theme-geek input[type="text"]{background:linear-gradient(45deg,#1a0033,#0ff);}
+body.theme-kuromi .select-container select, body.theme-kuromi input[type="text"]{background:linear-gradient(45deg,#2a002a,#f7a8e5);}
+body.theme-anime .select-container select, body.theme-anime input[type="text"]{background:linear-gradient(45deg,#1a002a,#a855f7);}
+body.theme-tech .select-container select, body.theme-tech input[type="text"]{background:linear-gradient(45deg,#132022,#00ffcc);}
+body.theme-comic .select-container select, body.theme-comic input[type="text"]{background:linear-gradient(45deg,#232b32,#ffe066);}
+body.theme-cyberpunk .select-container select, body.theme-cyberpunk input[type="text"]{background:linear-gradient(45deg,#2a0033,#00fff7);} 
 
 .select-container i {
   pointer-events:none;
@@ -333,7 +340,7 @@ input[type="text"] {
   max-width:1366px;
   min-width:300px;
   padding:6px 8px;
-  margin-bottom:8px;
+  margin-bottom:4px; /* reduced spacing so it nearly touches iframe */
   outline:none;
   text-align:center;
 }
@@ -347,7 +354,7 @@ input[type="text"] {
   box-shadow:0px 0px 15px rgba(0,212,255,0.4);
   border-radius:10px;
   display:none;
-  margin:0 auto;
+  margin:0 auto 12px auto; /* small gap from url bar */
 }
 
 .loadingOverlay {

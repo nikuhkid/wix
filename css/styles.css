@@ -282,12 +282,77 @@ input[type="text"],
   color:#fff;
 }
 /* Ensure selects and inputs inherit per-theme button hover styles */
-body.theme-geek .select-container select, body.theme-geek input[type="text"]{background:linear-gradient(45deg,#1a0033,#0ff);}
-body.theme-kuromi .select-container select, body.theme-kuromi input[type="text"]{background:linear-gradient(45deg,#2a002a,#f7a8e5);}
-body.theme-anime .select-container select, body.theme-anime input[type="text"]{background:linear-gradient(45deg,#1a002a,#a855f7);}
-body.theme-tech .select-container select, body.theme-tech input[type="text"]{background:linear-gradient(45deg,#132022,#00ffcc);}
-body.theme-comic .select-container select, body.theme-comic input[type="text"]{background:linear-gradient(45deg,#232b32,#ffe066);}
-body.theme-cyberpunk .select-container select, body.theme-cyberpunk input[type="text"]{background:linear-gradient(45deg,#2a0033,#00fff7);} 
+/* Match selects/inputs/#currentUrl to the theme's button visuals */
+body.theme-dark .select-container select,
+body.theme-dark input[type="text"],
+body.theme-dark #currentUrl {
+  background:#222244; /* match default button */
+  border-color:#ffcc00;
+  color:#fff;
+}
+
+body.theme-geek .select-container select,
+body.theme-geek input[type="text"],
+body.theme-geek #currentUrl {
+  background:#2a0055;
+  border-color:#0ff;
+  color:#fff;
+  box-shadow:0 0 10px #0ff;
+}
+
+body.theme-kuromi .select-container select,
+body.theme-kuromi input[type="text"],
+body.theme-kuromi #currentUrl {
+  background:#2a002a;
+  border-color:#f7a8e5;
+  color:#fff;
+  box-shadow:0 0 12px #f7a8e5;
+}
+
+body.theme-anime .select-container select,
+body.theme-anime input[type="text"],
+body.theme-anime #currentUrl {
+  background:#1a002a;
+  border-color:#a855f7;
+  color:#fff;
+  box-shadow:0 0 12px #a855f7;
+}
+
+body.theme-tech .select-container select,
+body.theme-tech input[type="text"],
+body.theme-tech #currentUrl {
+  background:#1a232a;
+  border-color:#00ffcc;
+  color:#aaffcc;
+  box-shadow:0 0 12px #00ffcc;
+}
+
+body.theme-comic .select-container select,
+body.theme-comic input[type="text"],
+body.theme-comic #currentUrl {
+  background:#232b32;
+  border-color:#ffe066;
+  color:#ffe066;
+  box-shadow:0 0 12px #ffe066;
+}
+
+body.theme-cyberpunk .select-container select,
+body.theme-cyberpunk input[type="text"],
+body.theme-cyberpunk #currentUrl {
+  background:#2a0033;
+  border-color:#ff00cc;
+  color:#00fff7;
+  box-shadow:0 0 12px #ff00cc;
+}
+
+body.theme-minimal .select-container select,
+body.theme-minimal input[type="text"],
+body.theme-minimal #currentUrl {
+  background:#23272a;
+  border-color:#3de0e0;
+  color:#b8e0ea;
+  box-shadow:0 0 8px #3de0e0;
+}
 
 .select-container i {
   pointer-events:none;

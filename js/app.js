@@ -176,13 +176,53 @@
     document.getElementById('proxyForm').addEventListener('submit',function(ev){ev.preventDefault();const t=document.getElementById('urlInput').value;projLib.processLoadUrl(t);});
     document.getElementById('homeBtn').addEventListener('click',function(){projLib.processLoadUrl(DEFAULT_HOME);});
     document.getElementById('refreshBtn').addEventListener('click',function(){const e=document.getElementById('currentUrl').value;if(e)projLib.processLoadUrl(e);});
-    document.querySelector('.row').addEventListener('change',function(ev){if(ev.target.tagName.toLowerCase()==='select'&&ev.target.value){projLib.processLoadUrl(ev.target.value);ev.target.selectedIndex=0;}});
+    // Dropdowns: only listen for selects inside the dropdowns-container
+    const dropdownsRow = document.querySelector('.dropdowns-container');
+    if(dropdownsRow) dropdownsRow.addEventListener('change',function(ev){
+      if(ev.target && ev.target.tagName && ev.target.tagName.toLowerCase()==='select' && ev.target.value){
+        projLib.processLoadUrl(ev.target.value);
+        ev.target.selectedIndex=0;
+      }
+    });
     document.getElementById('maskTab').addEventListener('change',function(ev){if(!ev.target.value)return;const [title,iconUrl]=ev.target.value.split('|');document.title=title;let link=document.querySelector("link[rel~='icon']");if(!link){link=document.createElement('link');link.rel='icon';document.head.appendChild(link);}link.href=iconUrl;ev.target.selectedIndex=0;});
     document.getElementById('toggleThemeBtn').addEventListener('click',projLib.toggleTheme);
+    // Fullscreen button for iframe using Fullscreen API (with fallbacks)
+    const fsBtn = document.getElementById('fullscreenBtn');
+    const frame = document.getElementById('proxyFrame');
+    if(fsBtn){
+      // init text
+      fsBtn.textContent = 'Fullscreen';
+      fsBtn.addEventListener('click', function(){
+        if(!frame) return;
+        const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+        if(!isFs){
+          const el = frame;
+          if(el.requestFullscreen) el.requestFullscreen();
+          else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+          else if(el.mozRequestFullScreen) el.mozRequestFullScreen();
+          else if(el.msRequestFullscreen) el.msRequestFullscreen();
+        } else {
+          if(document.exitFullscreen) document.exitFullscreen();
+          else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+          else if(document.mozCancelFullScreen) document.mozCancelFullScreen();
+          else if(document.msExitFullscreen) document.msExitFullscreen();
+        }
+      });
 
-    // Real-time URL tracking inside iframe
-    const frame=document.getElementById('proxyFrame');
-    setInterval(()=>{try{document.getElementById('currentUrl').value=frame.contentWindow.location.href;}catch{}},500);
+      // Update button text when fullscreen state changes
+      function updateFsText(){
+        const active = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+        fsBtn.textContent = active ? 'Exit Fullscreen' : 'Fullscreen';
+      }
+      document.addEventListener('fullscreenchange', updateFsText);
+      document.addEventListener('webkitfullscreenchange', updateFsText);
+      document.addEventListener('mozfullscreenchange', updateFsText);
+      document.addEventListener('MSFullscreenChange', updateFsText);
+    }
+
+  // Real-time URL tracking inside iframe
+  const iframeEl = document.getElementById('proxyFrame');
+  setInterval(()=>{try{document.getElementById('currentUrl').value=iframeEl.contentWindow.location.href;}catch{}},500);
   });
 
   window.projLib=projLib;

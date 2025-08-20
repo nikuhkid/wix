@@ -1,3 +1,200 @@
+/* THEME: DARK (classic near-black) */
+body.theme-dark {
+  background: #181818;
+  color: #eee;
+}
+body.theme-dark .container {
+  background: rgba(20,20,40,0.95);
+  box-shadow: 0px 4px 15px rgba(0,212,255,0.2);
+}
+
+/* THEME: GEEK (deep purple/blue with neon accents) */
+body.theme-geek {
+  background: #1a0033;
+  color: #aaffff;
+}
+body.theme-geek .container {
+  background: linear-gradient(135deg,#1a0033 80%,#0ff 100%);
+  box-shadow: 0 0 30px #0ff, 0 0 10px #a0f;
+}
+body.theme-geek button {
+  background: #2a0055;
+  border-color: #0ff;
+  color: #fff;
+  text-shadow: 0 0 8px #0ff;
+}
+
+/* THEME: MINIMAL (charcoal gray with subtle cyan) */
+body.theme-minimal {
+  background: #23272a;
+  color: #b8e0ea;
+}
+body.theme-minimal .container {
+  background: #23272a;
+  border: 1px solid #3de0e0;
+  box-shadow: 0 0 8px #3de0e0;
+}
+body.theme-minimal button {
+  background: #23272a;
+  border-color: #3de0e0;
+  color: #3de0e0;
+}
+
+/* THEME: KUROMI (black + pink/purple accents) */
+body.theme-kuromi {
+  background: #18111a;
+  color: #f7a8e5;
+}
+body.theme-kuromi .container {
+  background: linear-gradient(135deg,#18111a 80%,#f7a8e5 100%);
+  box-shadow: 0 0 20px #f7a8e5;
+}
+body.theme-kuromi button {
+  background: #2a002a;
+  border-color: #f7a8e5;
+  color: #fff;
+}
+.kuromi-spark {
+  position: absolute;
+  width: 32px; height: 32px;
+  background-image: url('assets/kuromi.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  animation: kuromi-fade 2s ease-out forwards;
+}
+
+/* THEME: TECH (dark steel + green/blue lines) */
+body.theme-tech {
+  background: #1a232a;
+  color: #aaffcc;
+}
+body.theme-tech .container {
+  background: #1a232a;
+  border: 1px solid #00ffcc;
+  box-shadow: 0 0 20px #00ffcc;
+  position: relative;
+}
+body.theme-tech button {
+  background: #1a232a;
+  border-color: #00ffcc;
+  color: #00ffcc;
+}
+.tech-scanline {
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,transparent,#00ffcc 60%,transparent);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 10;
+  animation: tech-scan-move 0.8s linear forwards;
+}
+@keyframes tech-scan-move {
+  0% { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+
+/* THEME: COMIC (dark slate + bright comic colors) */
+body.theme-comic {
+  background: #232b32;
+  color: #ffe066;
+}
+body.theme-comic .container {
+  background: #232b32;
+  border: 2px solid #ffe066;
+  box-shadow: 0 0 20px #ffe066;
+}
+body.theme-comic button {
+  background: #232b32;
+  border-color: #ff4c4c;
+  color: #ffe066;
+}
+.comic-pop {
+  position: absolute;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffdd33;
+  text-shadow: 2px 2px 0 #000, 0 0 8px #ff4c4c;
+  pointer-events: none;
+  animation: pop-fade 0.6s ease-out forwards;
+}
+
+/* THEME: ANIME (black/dark purple with vibrant neon highlights) */
+body.theme-anime {
+  background: #1a002a;
+  color: #f7a8e5;
+}
+body.theme-anime .container {
+  background: linear-gradient(135deg,#1a002a 80%,#a855f7 100%);
+  box-shadow: 0 0 30px #a855f7, 0 0 10px #0ff;
+}
+body.theme-anime button {
+  background: #1a002a;
+  border-color: #a855f7;
+  color: #fff;
+  text-shadow: 0 0 8px #a855f7;
+}
+.anime-star {
+  position: absolute;
+  width: 18px; height: 18px;
+  background: url('assets/anime-star.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  animation: anime-star-fade 0.7s linear forwards;
+}
+@keyframes anime-star-fade {
+  0% { opacity: 1; transform: scale(0.5) rotate(0deg); }
+  100% { opacity: 0; transform: scale(1.5) rotate(180deg); }
+}
+
+/* THEME: CYBERPUNK (deep violet + neon pink/cyan) */
+body.theme-cyberpunk {
+  background: #2a0033;
+  color: #ff00cc;
+}
+body.theme-cyberpunk .container {
+  background: linear-gradient(135deg,#2a0033 80%,#00fff7 100%);
+  box-shadow: 0 0 30px #ff00cc, 0 0 10px #00fff7;
+  animation: cyber-glitch 3s infinite linear;
+}
+body.theme-cyberpunk button {
+  background: #2a0033;
+  border-color: #ff00cc;
+  color: #00fff7;
+  text-shadow: 0 0 8px #ff00cc;
+}
+
+/* THEME: GEEK pulse effect */
+.geek-pulse {
+  position: absolute;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle,#0ff 0%,#a0f 100%);
+  opacity: 0.7;
+  pointer-events: none;
+  animation: geek-pulse-fade 1.2s linear forwards;
+}
+@keyframes geek-pulse-fade {
+  0% { opacity: 0.7; transform: scale(0.5); }
+  100% { opacity: 0; transform: scale(2); }
+}
+
+/* THEME: MINIMAL dot effect */
+.minimal-dot {
+  position: absolute;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #3de0e0;
+  opacity: 0.5;
+  pointer-events: none;
+  animation: minimal-dot-fade 1s linear forwards;
+}
+@keyframes minimal-dot-fade {
+  0% { opacity: 0.5; transform: scale(0.5); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css');
 

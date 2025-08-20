@@ -61,10 +61,14 @@
     // Anime: trail of stars
     else if(theme==='anime'){
       animeTrailHandler = function(e){
+        // compute position relative to container to avoid offset issues when hovering children
+        const rect = container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
         const star=document.createElement('div');
         star.className='anime-star';
-        star.style.left=e.offsetX+'px';
-        star.style.top=e.offsetY+'px';
+        star.style.left = Math.max(0, Math.min(rect.width, x)) + 'px';
+        star.style.top = Math.max(0, Math.min(rect.height, y)) + 'px';
         container.appendChild(star);
         setTimeout(()=>star.remove(),700);
       };

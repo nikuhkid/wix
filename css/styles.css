@@ -138,9 +138,10 @@ body.theme-anime button {
 .anime-star {
   position: absolute;
   width: 18px; height: 18px;
-  background: url('assets/anime-star.png');
-  background-size: contain;
-  background-repeat: no-repeat;
+  /* try image first, fallback to a glowing gradient star when missing */
+  background-image: url('assets/anime-star.png'), radial-gradient(circle at 30% 30%, #fff 0%, #ffd86b 20%, #ff7bd6 40%, rgba(255,123,214,0) 60%);
+  background-size: contain, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
   pointer-events: none;
   animation: anime-star-fade 0.7s linear forwards;
 }
@@ -223,6 +224,7 @@ body {
   background:rgba(20,20,40,0.9);
   border-radius:12px;
   box-shadow:0px 4px 15px rgba(0,212,255,0.5);
+  position: relative; /* enable absolute-positioned theme effects inside */
 }
 
 .row {
@@ -271,6 +273,13 @@ input[type="text"],
   background:#505050;
   color:#ffdd55;
   border-color:#ffaa00;
+}
+/* Make select look like buttons on hover */
+.select-container select:hover,
+.select-container select:focus {
+  background: linear-gradient(45deg,#9d00ff,#00d4ff);
+  box-shadow:0px 0px 10px rgba(157,0,255,0.5);
+  color:#fff;
 }
 
 .select-container i {
@@ -400,8 +409,25 @@ input[type="text"] {
   #proxyFrame{width:100%;height:auto;max-height:calc(100vh - 200px);}
 }
 
+/* Buttons container alignment */
+.buttons-container{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;width:100%;}
+.buttons-container form{display:flex;align-items:center;gap:8px;margin:0;padding:0;}
+.buttons-container input[type="text"]{width:420px;max-width:50vw;border-radius:8px;padding:10px;}
+
+/* Fullscreen iframe */
+.iframe-fullscreen{position:fixed!important;top:0;left:0;width:100vw!important;height:100vh!important;z-index:99999;border-radius:0!important;}
+
 /* Theme Effects */
-.kuromi-spark{position:absolute;width:32px;height:32px;background-image:url('assets/kuromi.png');background-size:contain;background-repeat:no-repeat;pointer-events:none;animation:kuromi-fade 2s ease-out forwards;}
+.kuromi-spark{
+  position:absolute;
+  width:32px;height:32px;
+  /* try image first, fallback to a pink/purple glow */
+  background-image: url('assets/kuromi.png'), radial-gradient(circle at 50% 50%, #fff 0%, #ff9ad6 30%, #a855f7 60%, rgba(168,85,247,0) 80%);
+  background-size: contain, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  pointer-events:none;
+  animation:kuromi-fade 2s ease-out forwards;
+}
 @keyframes kuromi-fade{0%{opacity:0;transform:scale(0);}50%{opacity:1;transform:scale(1.2);}100%{opacity:0;transform:scale(0);}}
 
 .comic-pop{position:absolute;font-size:24px;font-weight:bold;color:#ffdd33;text-shadow:2px 2px 0 #000;pointer-events:none;animation:pop-fade 0.6s ease-out forwards;}

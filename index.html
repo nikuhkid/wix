@@ -16,59 +16,80 @@
 </head>
 <body>
   <div class="container">
-    <h1 style="margin-bottom:10px">Hub Pr0jL1b</h1>
+    <h1 style="margin-bottom:10px">ProjLib Beta</h1>
 
     <!-- Tab Masking below title -->
-    <div class="mask-row">
-  <div class="select-container">
-    <i class="ri-eye-off-line"></i>
-    <select id="maskTab">
-      <option value="">Tab Masking</option>
+    <div class="tab-masking">
+      <i class="ri-eye-off-line" style="color:#888"></i>
+      <select id="maskTab">
+        <option value="">Tab Masking</option>
         <option value="Gmail|https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico">Gmail</option>
         <option value="Google|https://www.google.com/favicon.ico">Google Search</option>
         <option value="Microsoft Teams|https://statics.teams.cdn.office.net/hashed/favicon.ico">Microsoft Teams</option>
         <option value="Notion|https://www.notion.so/front-static/favicon.ico">Notion</option>
       </select>
-  </div>
-</div>
+    </div>
 
     <!-- Dropdowns row -->
-    <div class="row dropdowns">
-  <div class="select-container"><i class="ri-brain-line"></i><select id="brain"></select></div>
-  <div class="select-container"><i class="ri-gamepad-line"></i><select id="play"></select></div>
-  <div class="select-container"><i class="ri-movie-line"></i><select id="anime"></select></div>
-  <div class="select-container"><i class="ri-book-open-line"></i><select id="read"></select></div>
-  <div class="select-container"><i class="ri-video-line"></i><select id="watch"></select></div>
-  <div class="select-container"><i class="ri-calendar-line"></i><select id="daily"></select></div>
-</div>
+    <div class="dropdowns-container row">
+      <div class="select-container">
+        <i id="brain-icon" class="ri-brain-line"></i>
+        <select id="brain"></select>
+      </div>
+      <div class="select-container">
+        <i id="play-icon" class="ri-gamepad-line"></i>
+        <select id="play"></select>
+      </div>
+      <div class="select-container">
+        <i id="anime-icon" class="ri-movie-line"></i>
+        <select id="anime"></select>
+      </div>
+      <div class="select-container">
+        <i id="read-icon" class="ri-book-open-line"></i>
+        <select id="read"></select>
+      </div>
+      <div class="select-container">
+        <i id="watch-icon" class="ri-video-line"></i>
+        <select id="watch"></select>
+      </div>
+      <div class="select-container">
+        <i id="daily-icon" class="ri-calendar-line"></i>
+        <select id="daily"></select>
+      </div>
+    </div>
 
     <!-- Buttons row -->
-    <div class="row controls">
-  <button type="button" id="homeBtn">Home</button>
-  <form id="proxyForm" style="display:inline-block">
-    <input type="text" id="urlInput" placeholder="Enter website URL or search term" />
-    <button type="submit">Browse</button>
-  </form>
-  <button type="button" id="refreshBtn">Refresh</button>
-  <button type="button" id="toggleTheme">Cycle Theme</button>
-</div>
+    <div class="buttons-container form-group">
+      <button type="button" id="homeBtn">Home</button>
+      <form id="proxyForm">
+        <input type="text" id="urlInput" placeholder="Enter website URL or search term" />
+        <button type="submit">Browse</button>
+      </form>
+      <button type="button" id="refreshBtn">Refresh</button>
+      <button type="button" id="toggleThemeBtn">Change Theme</button>
+      <button type="button" id="fullscreenBtn">Fullscreen</button>
+    </div>
 
     <!-- Current URL -->
     <input type="text" id="currentUrl" readonly placeholder="Current URL" />
 
     <!-- Proxy / iframe -->
-    <div id="proxyContainer" style="position:relative;margin-top:12px;">
-  <div id="initialMessage" style="padding:20px;min-height:400px;display:flex;align-items:center;justify-content:center">
-    <div style="text-align:center;color:white">
-      <i class="ri-global-line" style="font-size:48px;color:#555"></i>
-      <h3>No Website Loaded</h3>
-      <p>Enter a URL or click one of the dropdowns to load a website.</p>
+    <div id="proxyContainer" style="position:relative;margin-top:20px;">
+      <div id="initialMessage" style="padding:20px;min-height:600px;display:flex;align-items:center;justify-content:center">
+        <div style="text-align:center;color:white">
+          <i class="ri-global-line" style="font-size:48px;color:#555"></i>
+          <h3>No Website Loaded</h3>
+          <p>Enter a URL or click one of the dropdowns to load a website.</p>
+        </div>
+      </div>
+
+      <div id="loadingOverlay" class="loadingOverlay">
+        <div class="spinner"></div>
+      </div>
+
+  <iframe id="proxyFrame" sandbox="allow-forms allow-scripts allow-same-origin allow-popups" allowfullscreen allow="fullscreen; autoplay; encrypted-media; picture-in-picture"></iframe>
     </div>
   </div>
-
-      <div id="loadingOverlay" class="loadingOverlay"><div class="spinner"></div></div>
-  <iframe id="proxyFrame" allowfullscreen referrerpolicy="no-referrer"></iframe>
-</div>
 
   <div class="ticker-container">
     <div class="ticker">Latest news: Loading...</div>

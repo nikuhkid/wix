@@ -4,7 +4,7 @@
   let HUB_DATA=null;
   let DEFAULT_HOME=null;
 
-  const THEME_LIST=['dark','kuromi','comic','cyberpunk','geek','tech','anime'];
+  const THEME_LIST=['dark','kuromi','comic','cyberpunk','geek','tech','anime','minimal'];
   let themeIndex=0;
 
   // ---------- Utilities ----------
@@ -25,15 +25,18 @@
   projLib.notifyUser=function(msg){const t=document.getElementById('notification');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4000);};
   projLib.applyTheme=function(mode){THEME_LIST.forEach(t=>document.body.classList.remove('theme-'+t));document.body.classList.add('theme-'+mode);};
 
-  // --- Comic theme click handler ---
+  // --- Theme effects handlers ---
   let comicClickHandler = null;
+  let animeTrailHandler = null;
+  let techScanHandler = null;
   function triggerThemeEffects(theme){
     const container=document.querySelector('.container');
-    // Remove previous comic click handler if any
-    if(comicClickHandler) {
-      container.removeEventListener('click', comicClickHandler);
-      comicClickHandler = null;
-    }
+    // Remove previous handlers if any
+    if(comicClickHandler) { container.removeEventListener('click', comicClickHandler); comicClickHandler = null; }
+    if(animeTrailHandler) { container.removeEventListener('mousemove', animeTrailHandler); animeTrailHandler = null; }
+    if(techScanHandler) { clearInterval(techScanHandler); techScanHandler = null; }
+
+    // Kuromi: spark
     if(theme==='kuromi'){
       const spark=document.createElement('div');
       spark.className='kuromi-spark';
@@ -42,6 +45,7 @@
       container.appendChild(spark);
       setTimeout(()=>spark.remove(),2000);
     }
+    // Comic: POW/BAM on click
     else if(theme==='comic'){
       comicClickHandler = function(e){
         const pop=document.createElement('div');
@@ -53,6 +57,48 @@
         setTimeout(()=>pop.remove(),600);
       };
       container.addEventListener('click', comicClickHandler);
+    }
+    // Anime: trail of stars
+    else if(theme==='anime'){
+      animeTrailHandler = function(e){
+        const star=document.createElement('div');
+        star.className='anime-star';
+        star.style.left=e.offsetX+'px';
+        star.style.top=e.offsetY+'px';
+        container.appendChild(star);
+        setTimeout(()=>star.remove(),700);
+      };
+      container.addEventListener('mousemove', animeTrailHandler);
+    }
+    // Tech: scanlines effect
+    else if(theme==='tech'){
+      function addScanline(){
+        const scan=document.createElement('div');
+        scan.className='tech-scanline';
+        scan.style.top=Math.random()*container.offsetHeight+'px';
+        container.appendChild(scan);
+        setTimeout(()=>scan.remove(),800);
+      }
+      techScanHandler = setInterval(addScanline, 400);
+    }
+    // Geek: neon pulse
+    else if(theme==='geek'){
+      const pulse=document.createElement('div');
+      pulse.className='geek-pulse';
+      pulse.style.left=Math.random()*container.offsetWidth+'px';
+      pulse.style.top=Math.random()*container.offsetHeight+'px';
+      container.appendChild(pulse);
+      setTimeout(()=>pulse.remove(),1200);
+    }
+    // Cyberpunk: keep glitch (handled by CSS)
+    // Minimal: subtle cyan dot
+    else if(theme==='minimal'){
+      const dot=document.createElement('div');
+      dot.className='minimal-dot';
+      dot.style.left=Math.random()*container.offsetWidth+'px';
+      dot.style.top=Math.random()*container.offsetHeight+'px';
+      container.appendChild(dot);
+      setTimeout(()=>dot.remove(),1000);
     }
   }
 

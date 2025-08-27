@@ -124,7 +124,8 @@
     const overlay=document.getElementById('loadingOverlay');overlay.style.display='flex';
     frame.onload=function(){overlay.style.display='none';document.getElementById('currentUrl').value=frame.contentWindow.location.href;};
     frame.onerror=function(){overlay.style.display='none';projLib.notifyUser('Failed to load the content.');};
-    frame.setAttribute('sandbox','allow-forms allow-scripts allow-same-origin allow-popups');
+    frame.setAttribute('allowfullscreen', 'true');
+    frame.setAttribute('referrerpolicy', 'no-referrer');
     frame.src=t;
   };
 

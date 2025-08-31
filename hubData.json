@@ -1,5 +1,9 @@
 {
   "defaultHome": "https://archive.org",
+  "whitelist": [
+    "wix.com",
+    "youtube.com"
+  ],
   "categories": [
     {
       "id": "brain",
@@ -66,13 +70,5 @@
         { "name": "Musicle", "url": "https://musicle.app" }
       ]
     }
-  ],
-  "blacklistedDomains": [
-    "wix.com",
-    "google.com",
-    "youtube.com",
-    "facebook.com",
-    "2ix2.com",
-    "sporttvhdonlinetvs.com"
   ]
 }

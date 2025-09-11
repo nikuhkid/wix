@@ -8,6 +8,9 @@
   let themeIndex = 0;
   let scanlineInterval = null;
 
+  // small helpers
+  function $(id){ return document.getElementById(id); }
+
   // ---------- Utilities ----------
   projLib.isValidUrl = function(e){
     try {
@@ -100,7 +103,7 @@
 
   // ---------- UI Helpers ----------
   projLib.notifyUser = function(msg){
-    const t = document.getElementById('notification');
+    const t = $('notification');
     if(!t) return;
     t.textContent = msg;
     t.classList.add('show');
@@ -109,13 +112,11 @@
 
   projLib.applyTheme = function(mode){
     THEME_LIST.forEach(t => document.body.classList.remove('theme-'+t));
-    if(mode) document.body.classList.add('theme-'+mode);
+    if(mode && mode!=='dark') document.body.classList.add('theme-'+mode);
   };
 
   function triggerThemeEffects(theme){
     const container = document.querySelector('.console-container');
-
-    // remove previous scanlines
     if(scanlineInterval){ clearInterval(scanlineInterval); scanlineInterval=null; }
     document.querySelectorAll('.tech-scanline').forEach(el=>el.remove());
 
@@ -142,50 +143,99 @@
     const theme = THEME_LIST[themeIndex];
     projLib.applyTheme(theme);
     triggerThemeEffects(theme);
-    const btn = document.getElementById('toggleThemeBtn');
+    const btn = $('toggleThemeBtn');
     if(btn) btn.textContent = 'Theme: '+theme.charAt(0).toUpperCase()+theme.slice(1);
     localStorage.setItem('theme', theme);
   };
 
-  // ---------- Iframe ----------
+  // ---------- Iframe + embed detection ----------
+  let embedCheckTimer = null;
+  let iframeLoaded = false;
+
+  function showEmbedBlocked(url){
+    const el = $('embedBlocked');
+    if(!el) return;
+    el.classList.remove('hidden');
+    const msg = $('embedMsg');
+    if(msg) msg.textContent = 'This site prevented embedding in the frame. Open externally or copy the link.';
+    const openBtn = $('openExternalBtn');
+    if(openBtn) openBtn.onclick = ()=> { window.open(url,'_blank','noopener'); };
+    const copyBtn = $('copyLinkBtn');
+    if(copyBtn) copyBtn.onclick = ()=> {
+      if(navigator.clipboard) navigator.clipboard.writeText(url).then(()=>projLib.notifyUser('Link copied.'));
+      else { const ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); projLib.notifyUser('Link copied.'); }
+    };
+    const dismiss = $('dismissEmbedBtn');
+    if(dismiss) dismiss.onclick = ()=> el.classList.add('hidden');
+  }
+
+  function hideEmbedBlocked(){
+    const el = $('embedBlocked');
+    if(!el) return;
+    el.classList.add('hidden');
+  }
+
   projLib.processLoadUrl = function(input){
     let t = (input||'').trim();
     if(!t) return;
 
     if(!t.startsWith('http://') && !t.startsWith('https://')){
-      // if contains a dot, assume website; else search
       if(/\.\w{2,}/.test(t)) t='https://'+t;
       else t='https://swisscows.com/web?query='+encodeURIComponent(t);
     }
 
-    const frame = document.getElementById('proxyFrame');
+    const frame = $('proxyFrame');
     if(!frame) return;
 
-    // update internal readout (hidden)
-    try { document.getElementById('currentUrl').value = t; } catch(e){}
+    try { $('currentUrl').value = t; } catch(e){}
 
     frame.removeAttribute('srcdoc');
     frame.style.display='block';
-    const initialMessage = document.getElementById('initialMessage');
+    const initialMessage = $('initialMessage');
     if(initialMessage) initialMessage.style.display='none';
-    const overlay = document.getElementById('loadingOverlay');
+    const overlay = $('loadingOverlay');
     if(overlay) overlay.style.display='flex';
 
-    // onload: try read location, but catch cross-origin errors
+    // clear previous timers
+    if(embedCheckTimer){ clearTimeout(embedCheckTimer); embedCheckTimer = null; }
+    iframeLoaded = false;
+
+    // handlers
     frame.onload = function(){
+      iframeLoaded = true;
       if(overlay) overlay.style.display='none';
+      hideEmbedBlocked(); // assume success; only show on explicit error or timeout if really no load
+      // Try to set currentUrl if same-origin (may throw)
+      try { $('currentUrl').value = frame.contentWindow.location.href; } catch(e) { /* cross-origin - ignore */ }
+      // quick sanity-check: if accessible document body exists but is empty -> show fallback
       try {
-        document.getElementById('currentUrl').value = frame.contentWindow.location.href;
-      } catch (err) {
-        // cross-origin read blocked — fall back to src
-        try { document.getElementById('currentUrl').value = frame.src; } catch(e){}
+        const doc = frame.contentDocument || frame.contentWindow.document;
+        if(doc && doc.body && doc.body.children && doc.body.children.length === 0 && (doc.body.textContent||'').trim().length < 8) {
+          showEmbedBlocked(t);
+        } else {
+          hideEmbedBlocked();
+        }
+      } catch(e) {
+        // reading cross-origin throws - don't assume failure; leave it hidden
       }
     };
     frame.onerror = function(){
+      iframeLoaded = true;
       if(overlay) overlay.style.display='none';
-      projLib.notifyUser('Failed to load the content.');
+      const initialMessage = $('initialMessage');
       if(initialMessage) initialMessage.style.display='';
+      projLib.notifyUser('Failed to load the content in-frame.');
+      showEmbedBlocked(t);
     };
+
+    // fallback timeout: if neither onload nor onerror fired within X ms, show message (conservative)
+    embedCheckTimer = setTimeout(()=> {
+      if(!iframeLoaded){
+        if(overlay) overlay.style.display='none';
+        projLib.notifyUser('Frame load timed out — possible embed block or slow network.');
+        showEmbedBlocked(t);
+      }
+    }, 4000);
 
     frame.setAttribute('allowfullscreen', 'true');
     frame.setAttribute('referrerpolicy', 'no-referrer');
@@ -199,7 +249,7 @@
     if(cached){ try{ HUB_DATA = JSON.parse(cached); if(typeof HUB_DATA.defaultHome === 'string') DEFAULT_HOME = HUB_DATA.defaultHome; } catch{} }
     return projLib.fetchWithRetry(path, {}, 2, 10000)
       .then(resp => { if(!resp.ok) throw new Error('Failed to fetch hubData.json'); return resp.json(); })
-      .then(data => { 
+      .then(data => {
         HUB_DATA = data;
         localStorage.setItem(cacheKey, JSON.stringify(data));
         if(typeof data.defaultHome==='string' && data.defaultHome) DEFAULT_HOME = data.defaultHome;
@@ -211,11 +261,11 @@
   projLib.populateDropdowns = function(data){
     if(!data||!Array.isArray(data.categories)) return;
     data.categories.forEach(cat => {
-      const select = document.getElementById(cat.id);
+      const select = $(cat.id);
       if(!select) return;
       select.innerHTML='';
       const placeholder = document.createElement('option');
-      placeholder.value=''; placeholder.textContent = cat.label||'Select';
+      placeholder.value=''; placeholder.textContent = cat.label||'Select'; placeholder.disabled = true; placeholder.selected = true;
       select.appendChild(placeholder);
       if(Array.isArray(cat.links)){
         const frag = document.createDocumentFragment();
@@ -232,13 +282,13 @@
 
   // ---------- Boot ----------
   document.addEventListener('DOMContentLoaded', function(){
-    // Theme
+    // Theme - pick stored or default dark
     let theme = localStorage.getItem('theme');
     if(!theme||!THEME_LIST.includes(theme)) theme='dark';
     themeIndex = THEME_LIST.indexOf(theme);
     projLib.applyTheme(theme);
     triggerThemeEffects(theme);
-    const btn = document.getElementById('toggleThemeBtn');
+    const btn = $('toggleThemeBtn');
     if(btn) btn.textContent = 'Theme: '+theme.charAt(0).toUpperCase()+theme.slice(1);
 
     // Ticker
@@ -247,34 +297,31 @@
     // Load hub
     projLib.loadHubData('./hubData.json').then(data=>{
       projLib.populateDropdowns(data);
-      // load configured home if any
       if(DEFAULT_HOME) projLib.processLoadUrl(DEFAULT_HOME);
       else if(data && data.defaultHome) projLib.processLoadUrl(data.defaultHome);
     });
 
-    // Dropdowns: use the grid wrapper for event delegation
+    // Dropdowns event delegation
     const ddGrid = document.querySelector('.dropdowns-grid');
     if(ddGrid){
       ddGrid.addEventListener('change', function(ev){
         if(ev.target && ev.target.tagName && ev.target.tagName.toLowerCase()==='select'){
           const val = ev.target.value;
           if(val) projLib.processLoadUrl(val);
-          // reset to placeholder (use slight delay so selection event registers visually)
           setTimeout(()=>{ ev.target.selectedIndex = 0; }, 100);
         }
       });
     }
 
     // Scanner toggle
-    const scannerBtn = document.getElementById('scannerBtn');
-    const scannerForm = document.getElementById('scannerForm');
-    const urlInput = document.getElementById('urlInput');
+    const scannerBtn = $('scannerBtn');
+    const scannerForm = $('scannerForm');
+    const urlInput = $('urlInput');
     if(scannerForm){ scannerForm.classList.add('hidden'); }
     if(scannerBtn){
       scannerBtn.addEventListener('click', ()=>{
         if(!scannerForm) return;
         scannerForm.classList.toggle('hidden');
-        // focus when visible
         if(!scannerForm.classList.contains('hidden') && urlInput) urlInput.focus();
       });
     }
@@ -284,8 +331,8 @@
         e.preventDefault();
         if(urlInput) {
           projLib.processLoadUrl(urlInput.value || '');
-          // optionally hide after submission
           scannerForm.classList.add('hidden');
+          urlInput.value = '';
         }
       });
     }
@@ -294,10 +341,10 @@
     if(btn) btn.addEventListener('click', projLib.toggleTheme);
 
     // Fullscreen button
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const fullscreenBtn = $('fullscreenBtn');
     if(fullscreenBtn){
       fullscreenBtn.addEventListener('click', ()=>{
-        const frame = document.getElementById('proxyFrame');
+        const frame = $('proxyFrame');
         if(!frame) return;
         if(frame.requestFullscreen) frame.requestFullscreen();
         else if(frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
@@ -307,7 +354,7 @@
     }
 
     // Home button
-    const homeBtn = document.getElementById('homeBtn');
+    const homeBtn = $('homeBtn');
     if(homeBtn){
       homeBtn.addEventListener('click', ()=>{
         const home = DEFAULT_HOME || (HUB_DATA && HUB_DATA.defaultHome) || '';
@@ -317,30 +364,26 @@
     }
 
     // Refresh button
-    const refreshBtn = document.getElementById('refreshBtn');
+    const refreshBtn = $('refreshBtn');
     if(refreshBtn){
       refreshBtn.addEventListener('click', ()=>{
-        const frame = document.getElementById('proxyFrame');
+        const frame = $('proxyFrame');
         if(!frame) return;
         try {
           frame.contentWindow.location.reload();
         } catch (err) {
-          // cross-origin or other issue — fallback to reset src
           frame.src = frame.src;
         }
       });
     }
 
-    // keyboard: ESC hides scanner if visible
+    // ESC hides scanner
     document.addEventListener('keydown', function(ev){
       if(ev.key === 'Escape'){
         if(scannerForm && !scannerForm.classList.contains('hidden')) scannerForm.classList.add('hidden');
       }
     });
 
-    // Worker placeholder (no-op if not present)
-    const workerEl = document.getElementById('workerPlaceholder');
-    if(workerEl) workerEl.style.display='block';
   });
 
 })(window.ProjLib=window.ProjLib||{});

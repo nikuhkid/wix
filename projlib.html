@@ -3,45 +3,47 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ProjLib Control</title>
+  <title>ProjLib Control Node</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+
   <div class="console-container">
 
-    <h1 class="title">ProjLib Control Node [BETA]</h1>
+    <header class="top-bar">
+      <h1 class="title">ProjLib Control Node <span class="beta">[BETA]</span></h1>
 
-    <!-- Futuristic toggle bar -->
-    <div class="control-bar">
-      <label class="switch">
-        <input type="checkbox" id="proxyToggle" />
-        <span class="slider"></span>
-        <span class="label">Proxy Mode</span>
-      </label>
+      <div class="control-bar">
+        <label class="switch">
+          <input type="checkbox" id="proxyToggle" />
+          <span class="slider"></span>
+          <span class="label">Proxy Mode</span>
+        </label>
 
-      <div class="right-buttons">
-        <button id="scannerBtn"><i class="ri-search-eye-line"></i> Scanner</button>
-        <button id="toggleThemeBtn"><i class="ri-brush-line"></i> Theme</button>
+        <div class="right-buttons">
+          <button id="scannerBtn" title="Toggle scanner"><i class="ri-search-eye-line"></i> Scanner</button>
+          <button id="toggleThemeBtn" title="Cycle themes">Theme</button>
+        </div>
       </div>
-    </div>
+    </header>
 
-    <!-- Scanner/search bar -->
-    <form id="proxyForm" class="scanner hidden">
+    <!-- Scanner/search bar (hidden by default) -->
+    <form id="proxyForm" class="scanner hidden" autocomplete="off">
       <input type="text" id="urlInput" placeholder="Enter URL or code sequence" />
       <button type="submit">Engage</button>
     </form>
 
     <!-- Dropdown selectors -->
-    <div class="dropdowns-grid">
-      <div class="select-container"><i class="ri-brain-line"></i><select id="brain"></select></div>
-      <div class="select-container"><i class="ri-gamepad-line"></i><select id="play"></select></div>
-      <div class="select-container"><i class="ri-movie-line"></i><select id="anime"></select></div>
-      <div class="select-container"><i class="ri-book-open-line"></i><select id="read"></select></div>
-      <div class="select-container"><i class="ri-video-line"></i><select id="watch"></select></div>
-      <div class="select-container"><i class="ri-calendar-line"></i><select id="daily"></select></div>
+    <div class="dropdowns-grid" aria-hidden="false">
+      <div class="select-container"><i class="ri-brain-line"></i><select id="brain" aria-label="Brain Tease"></select></div>
+      <div class="select-container"><i class="ri-gamepad-line"></i><select id="play" aria-label="Arcade"></select></div>
+      <div class="select-container"><i class="ri-movie-line"></i><select id="anime" aria-label="Animation"></select></div>
+      <div class="select-container"><i class="ri-book-open-line"></i><select id="read" aria-label="Readable"></select></div>
+      <div class="select-container"><i class="ri-video-line"></i><select id="watch" aria-label="Watchable"></select></div>
+      <div class="select-container"><i class="ri-calendar-line"></i><select id="daily" aria-label="Dailies"></select></div>
     </div>
 
     <!-- Action buttons -->
@@ -52,7 +54,7 @@
     </div>
 
     <!-- Proxy iframe area -->
-    <div id="proxyContainer">
+    <div id="proxyContainer" class="proxy-container">
       <div id="initialMessage" class="idle-state">
         <div>
           <i class="ri-global-line"></i>
@@ -60,14 +62,16 @@
           <p>Awaiting input sequence.</p>
         </div>
       </div>
-      <div id="loadingOverlay" class="loadingOverlay"><div class="spinner"></div></div>
-      <iframe id="proxyFrame"></iframe>
+
+      <div id="loadingOverlay" class="loadingOverlay" aria-hidden="true">
+        <div class="spinner"></div>
+      </div>
+
+      <iframe id="proxyFrame" title="Proxy Frame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
     </div>
 
-    <!-- Futuristic ticker -->
-    <div class="ticker-container">
-      <div class="ticker">[Feed: Initializing nodes...]</div>
-    </div>
+    <!-- Notification -->
+    <div id="notification" class="notification" aria-live="polite"></div>
 
   </div>
 

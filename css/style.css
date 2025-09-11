@@ -150,6 +150,7 @@ h1.title {
   border-radius: 8px;
   padding: 5px;
   color: #0f0;
+  position: relative;
 }
 
 .select-container i {
@@ -165,6 +166,20 @@ h1.title {
   color: #0f0;
   font-family: 'Orbitron', sans-serif;
   outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 20px;
+}
+
+/* Custom arrow */
+.select-container::after {
+  content: "▼";
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  font-size: 12px;
+  color: #0f0;
 }
 
 /* ========= ACTION BUTTONS ========= */
@@ -195,15 +210,7 @@ h1.title {
 
 /* ========= URL READOUT ========= */
 #currentUrl {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  background: #111;
-  border: 2px solid #0ff;
-  color: #0ff;
-  font-family: 'Orbitron', monospace;
-  text-align: center;
-  border-radius: 6px;
+  display: none; /* Hide the URL box */
 }
 
 /* ========= PROXY CONTAINER ========= */

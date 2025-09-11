@@ -1,238 +1,97 @@
-/* style.css
-   Console UI with advanced themed effects
+/* css/style.css
+   Polished console UI, fixed dropdowns, theme bases + effect helper classes
 */
 
-/* ---------- Base Layout ---------- */
-body {
-  margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: #0e0e0e;
-  color: #eee;
-  overflow: hidden;
+:root{
+  --bg: #000;
+  --panel-bg: rgba(0,0,0,0.85);
+  --accent-cyan: #00ffff;
+  --accent-green: #00ff66;
+  --accent-warn: #ff9900;
+  --muted: #6b6b6b;
+  --text: #c5ffef;
 }
 
-.console-container {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: #111;
-  overflow: hidden;
-}
+/* ----- Base layout ----- */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:'Orbitron',sans-serif;background:radial-gradient(circle at center,#050505 0%,#000 100%);color:var(--text);-webkit-font-smoothing:antialiased}
+.console-container{max-width:1200px;margin:18px auto;padding:14px;border:2px solid var(--accent-green);border-radius:12px;background:var(--panel-bg);box-shadow:0 0 24px rgba(0,255,0,0.06)}
 
-/* ---------- Iframe ---------- */
-#proxyFrame {
-  flex: 1;
-  border: none;
-  width: 100%;
-  height: 100%;
-  background: #000;
-}
+/* header */
+.top-bar{display:flex;flex-direction:column;gap:10px}
+.title{margin:0;font-size:20px;color:var(--accent-cyan);text-shadow:0 0 8px var(--accent-cyan)}
+.beta{font-size:11px;color:var(--muted);margin-left:8px}
 
-/* ---------- Overlay + Initial ---------- */
-#loadingOverlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: 50;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2em;
-  color: #0f0;
-}
+/* control bar */
+.control-bar{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.right-buttons{display:flex;gap:8px}
+.right-buttons button{background:none;border:2px solid #f0f;padding:6px 12px;color:#f0f;border-radius:8px;cursor:pointer;transition:all .18s}
+.right-buttons button:hover{background:#f0f;color:#000}
 
-#initialMessage {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1em;
-  color: #999;
-}
+/* switch */
+.switch{display:flex;align-items:center;gap:8px}
+.switch input{display:none}
+.slider{width:50px;height:24px;background:#111;border-radius:24px;border:2px solid var(--accent-cyan);position:relative}
+.slider::before{content:"";position:absolute;width:18px;height:18px;left:2px;top:2px;background:var(--accent-cyan);border-radius:50%;transition:transform .25s}
+.switch input:checked + .slider{background:var(--accent-cyan)}
+.switch input:checked + .slider::before{transform:translateX(26px);background:#000}
+.label{font-size:12px;color:var(--text);text-transform:uppercase}
 
-/* ---------- Controls ---------- */
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #1b1b1b;
-  padding: 4px 8px;
-  z-index: 20;
-}
+/* scanner */
+.scanner{display:flex;margin:10px 0;gap:6px}
+.scanner.hidden{display:none}
+.scanner input{flex:1;padding:8px;border:2px solid var(--accent-cyan);background:#000;color:var(--text);border-radius:8px 0 0 8px;outline:none;font-size:13px}
+.scanner button{padding:8px 12px;border:2px solid var(--accent-cyan);background:var(--accent-cyan);color:#000;border-radius:0 8px 8px 0;cursor:pointer}
 
-.action-buttons button,
-.right-buttons button {
-  background: #222;
-  color: #eee;
-  border: 1px solid #333;
-  padding: 4px 10px;
-  margin: 0 2px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-}
-.action-buttons button:hover,
-.right-buttons button:hover {
-  background: #333;
-  transform: scale(1.05);
-}
+/* dropdowns */
+.dropdowns-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+.select-container{display:flex;align-items:center;background:#111;border:2px solid var(--accent-green);border-radius:8px;padding:6px;min-height:44px}
+.select-container i{margin-right:8px;font-size:18px;color:var(--accent-green);width:24px;text-align:center}
+.select-container select{flex:1;background:transparent;border:none;color:var(--text);font-family:'Orbitron',sans-serif;outline:none;appearance:none;padding:6px 36px 6px 6px;font-size:12px;height:28px;line-height:28px}
+.select-container::after{content:"▾";position:absolute;right:12px;font-size:12px;color:var(--accent-green);pointer-events:none}
 
-/* Scanner hidden by default */
-#proxyForm {
-  display: none;
-  gap: 6px;
-}
-#urlInput {
-  padding: 4px 8px;
-  border: 1px solid #444;
-  border-radius: 4px;
-  background: #181818;
-  color: #eee;
-}
+/* action buttons */
+.action-buttons{display:flex;gap:10px;margin-bottom:14px}
+.action-buttons button{flex:1;min-width:120px;padding:8px;border:2px solid var(--accent-warn);background:#000;color:var(--accent-warn);border-radius:8px;cursor:pointer;transition:all .18s}
+.action-buttons button:hover{background:var(--accent-warn);color:#000}
 
-/* ---------- Dropdowns ---------- */
-.dropdowns-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
-  gap: 6px;
-  background: #151515;
-  padding: 6px;
-}
+/* proxy container */
+.proxy-container{position:relative;background:#000;border:2px solid #f0f;border-radius:8px;min-height:420px;overflow:hidden}
+#proxyFrame{width:100%;height:600px;border:none;display:block;background:#111}
+.loadingOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.78);z-index:60;display:none}
+.spinner{width:40px;height:40px;border:4px solid #333;border-top:4px solid var(--accent-cyan);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-.select-container select {
-  width: 100%;
-  padding: 2px 4px;
-  font-size: 0.85rem;
-  line-height: 1.2;
-  border: 1px solid #333;
-  border-radius: 4px;
-  background: #202020;
-  color: #eee;
-  appearance: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+/* idle */
+.idle-state{color:#888;text-align:center;padding:48px}
+.idle-state i{font-size:48px;color:#333}
 
-/* ---------- Theme Base ---------- */
-body.theme-dark { background: #0e0e0e; color: #eee; }
-body.theme-kuromi { background: #1b0e16; color: #fcd; }
-body.theme-comic { background: #fff7f0; color: #111; font-family: "Comic Sans MS", cursive, sans-serif; }
-body.theme-cyberpunk { background: #0a0015; color: #0ff; }
-body.theme-geek { background: #000; color: #0f0; font-family: monospace; }
-body.theme-tech { background: #101820; color: #0ff; }
-body.theme-anime { background: #fff0f8; color: #222; font-family: "Noto Sans JP", sans-serif; }
-body.theme-minimal { background: #f7f7f7; color: #111; font-family: Arial, sans-serif; }
+/* notification */
+.notification{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.9);border:2px solid var(--accent-cyan);padding:10px 14px;border-radius:8px;color:var(--accent-cyan);opacity:0;pointer-events:none;transition:opacity .25s}
+.notification.show{opacity:1;pointer-events:auto}
 
-/* ---------- Theme Effects ---------- */
-.theme-effect { pointer-events: none; z-index: 100; }
+/* theme base classes (dark default) */
+body.theme-dark { --accent-cyan: #00ffff; --accent-green: #00ff66; --accent-warn:#ff9900; }
+body.theme-kuromi { --accent-cyan:#ff66cc; --accent-green:#ff9ad5; color:#ffd6f2; background:linear-gradient(180deg,#100014,#180022); }
+body.theme-comic { --accent-cyan:#ff0055; --accent-green:#ffd500; color:#111; background:#fff8f0; }
+body.theme-cyberpunk { --accent-cyan:#ff00ff; --accent-green:#00ffff; background:linear-gradient(180deg,#070014,#001018); }
+body.theme-geek { --accent-cyan:#00ff66; --accent-green:#00ff66; background:#000; color:#baffb0; font-family:monospace; }
+body.theme-tech { --accent-cyan:#66d9ff; --accent-green:#66d9ff; background:#071026; color:#cff8ff; }
+body.theme-anime { --accent-cyan:#ff9ad5; --accent-green:#ffd6f2; background:linear-gradient(180deg,#fff4f7,#fff0f7); color:#222; }
+body.theme-minimal { --accent-cyan:#bfbfbf; --accent-green:#bfbfbf; background:#f7f7f7; color:#111 }
 
-/* Kuromi popups */
-.kuromi-icon {
-  width: 40px;
-  height: 40px;
-  background-image: url("https://i.ibb.co/VH1pK5Q/kuromi.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: absolute;
-  animation: kuromi-peek 1.5s ease-in-out forwards;
-}
-@keyframes kuromi-peek {
-  0% { transform: scale(0) rotate(-20deg); opacity: 0; }
-  40% { transform: scale(1.1) rotate(10deg); opacity: 1; }
-  70% { transform: scale(1) rotate(0); }
-  100% { transform: scale(0); opacity: 0; }
-}
+/* theme-effect helpers (JS will inject DOM nodes with these) */
+.theme-effect{position:absolute;pointer-events:none;z-index:120}
+.tech-scanline{height:2px;left:0;width:100%;background:linear-gradient(90deg,transparent,var(--accent-cyan),transparent);opacity:0.95}
+.kuromi-icon{width:36px;height:36px;background-size:contain;background-repeat:no-repeat;background-image:url('https://upload.wikimedia.org/wikipedia/en/d/dc/Kuromi_icon.png')}
+.comic-pop{background:var(--accent-warn);color:#111;padding:8px 12px;border-radius:10px;font-weight:700}
+.cp-overlay{inset:0;left:0;right:0;top:0;bottom:0;background:linear-gradient(90deg, rgba(255,0,255,0.06), rgba(0,255,255,0.04));}
+.matrix-char{color:var(--accent-green);font-family:monospace;font-size:14px}
+.anime-particle{width:10px;height:10px;background:radial-gradient(circle,var(--accent-green),transparent);border-radius:50%}
 
-/* Tech scanlines */
-.tech-scanline {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: rgba(0,255,255,0.4);
-  animation: scanline-move 0.8s forwards;
-}
-@keyframes scanline-move {
-  from { opacity: 1; }
-  to { opacity: 0; transform: translateY(20px); }
-}
-
-/* Comic pop effect */
-.comic-pop {
-  position: absolute;
-  width: 80px;
-  height: 40px;
-  border: 2px solid #111;
-  background: yellow;
-  font-weight: bold;
-  text-align: center;
-  line-height: 40px;
-  border-radius: 20px;
-  animation: comic-pop-anim 1s ease-out forwards;
-}
-@keyframes comic-pop-anim {
-  0% { transform: scale(0); opacity: 0; }
-  40% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(0); opacity: 0; }
-}
-
-/* Cyberpunk overlay */
-.cp-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(45deg, rgba(255,0,255,0.2), transparent 60%);
-  mix-blend-mode: screen;
-  animation: cp-glitch 1s infinite alternate;
-}
-@keyframes cp-glitch {
-  from { transform: skewX(0deg); }
-  to { transform: skewX(5deg); }
-}
-
-/* Geek matrix chars */
-.matrix-char {
-  position: absolute;
-  font-family: monospace;
-  font-size: 14px;
-  color: #0f0;
-  animation: matrix-fall 3s linear forwards;
-}
-@keyframes matrix-fall {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
-}
-
-/* Anime particles */
-.anime-particle {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: pink;
-  border-radius: 50%;
-  animation: anime-float 2s ease-out forwards;
-}
-@keyframes anime-float {
-  0% { transform: translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateY(-100px) scale(0); opacity: 0; }
-}
-
-/* Minimal theme simplification */
-body.theme-minimal .controls,
-body.theme-minimal .dropdowns-grid {
-  background: #fff;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-}
-body.theme-minimal button {
-  border-radius: 2px;
-  background: #eee;
-  color: #111;
-}
-
-/* ---------- Transitions ---------- */
-body, .select-container select, .action-buttons button, .right-buttons button {
-  transition: background 0.3s, color 0.3s, border-radius 0.3s, font-family 0.3s;
+/* small responsiveness */
+@media (max-width:640px){
+  .right-buttons button{padding:6px 8px;font-size:13px}
+  .select-container{padding:4px}
+  #proxyFrame{height:420px}
 }

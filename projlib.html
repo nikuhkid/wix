@@ -22,10 +22,14 @@
         <span class="label">Proxy Mode</span>
       </label>
 
-      <button id="scannerBtn"><i class="ri-search-eye-line"></i> Scanner</button>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button id="scannerBtn"><i class="ri-search-eye-line"></i> Scanner</button>
+        <!-- Optional theme toggle button (apps.js will check for it) -->
+        <button id="toggleThemeBtn" class="small">Theme</button>
+      </div>
     </div>
 
-    <!-- Scanner/search bar (hidden by default, fixed ID) -->
+    <!-- Scanner / search bar (hidden by default) -->
     <form id="scannerForm" class="scanner hidden">
       <input type="text" id="urlInput" placeholder="Enter URL or code sequence" />
       <button type="submit">Engage</button>
@@ -48,7 +52,7 @@
       <button id="fullscreenBtn"><i class="ri-fullscreen-line"></i> Fullscreen</button>
     </div>
 
-    <!-- Current URL readout (hidden now) -->
+    <!-- Current URL readout (kept for internal use but hidden visually) -->
     <input type="text" id="currentUrl" readonly placeholder="No Signal" />
 
     <!-- Proxy iframe area -->
@@ -68,6 +72,9 @@
     <div class="ticker-container">
       <div class="ticker">[Feed: Initializing nodes...]</div>
     </div>
+
+    <!-- Notification (used by apps.js) -->
+    <div id="notification" class="notification" aria-live="polite"></div>
 
   </div>
 

@@ -25,8 +25,8 @@
       <button id="scannerBtn"><i class="ri-search-eye-line"></i> Scanner</button>
     </div>
 
-    <!-- Scanner/search bar (hidden by default) -->
-    <form id="proxyForm" class="scanner hidden">
+    <!-- Scanner/search bar (hidden by default, fixed ID) -->
+    <form id="scannerForm" class="scanner hidden">
       <input type="text" id="urlInput" placeholder="Enter URL or code sequence" />
       <button type="submit">Engage</button>
     </form>
@@ -48,7 +48,7 @@
       <button id="fullscreenBtn"><i class="ri-fullscreen-line"></i> Fullscreen</button>
     </div>
 
-    <!-- Current URL readout -->
+    <!-- Current URL readout (hidden now) -->
     <input type="text" id="currentUrl" readonly placeholder="No Signal" />
 
     <!-- Proxy iframe area -->

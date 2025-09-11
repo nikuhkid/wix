@@ -22,27 +22,26 @@
         <span class="label">Proxy Mode</span>
       </label>
 
-      <div style="display:flex; gap:8px; align-items:center;">
+      <div class="control-actions">
         <button id="scannerBtn"><i class="ri-search-eye-line"></i> Scanner</button>
-        <!-- Optional theme toggle button (apps.js will check for it) -->
         <button id="toggleThemeBtn" class="small">Theme</button>
       </div>
     </div>
 
     <!-- Scanner / search bar (hidden by default) -->
     <form id="scannerForm" class="scanner hidden">
-      <input type="text" id="urlInput" placeholder="Enter URL or code sequence" />
+      <input type="text" id="urlInput" placeholder="Enter URL or code sequence" autocomplete="off" />
       <button type="submit">Engage</button>
     </form>
 
     <!-- Dropdown selectors -->
     <div class="dropdowns-grid">
-      <div class="select-container"><i class="ri-brain-line"></i><select id="brain"></select></div>
-      <div class="select-container"><i class="ri-gamepad-line"></i><select id="play"></select></div>
-      <div class="select-container"><i class="ri-movie-line"></i><select id="anime"></select></div>
-      <div class="select-container"><i class="ri-book-open-line"></i><select id="read"></select></div>
-      <div class="select-container"><i class="ri-video-line"></i><select id="watch"></select></div>
-      <div class="select-container"><i class="ri-calendar-line"></i><select id="daily"></select></div>
+      <div class="select-container"><i class="ri-brain-line"></i><select id="brain" aria-label="Brain Tease"></select></div>
+      <div class="select-container"><i class="ri-gamepad-line"></i><select id="play" aria-label="Arcade"></select></div>
+      <div class="select-container"><i class="ri-movie-line"></i><select id="anime" aria-label="Animation"></select></div>
+      <div class="select-container"><i class="ri-book-open-line"></i><select id="read" aria-label="Readable"></select></div>
+      <div class="select-container"><i class="ri-video-line"></i><select id="watch" aria-label="Watchable"></select></div>
+      <div class="select-container"><i class="ri-calendar-line"></i><select id="daily" aria-label="Dailies"></select></div>
     </div>
 
     <!-- Action buttons -->
@@ -52,7 +51,7 @@
       <button id="fullscreenBtn"><i class="ri-fullscreen-line"></i> Fullscreen</button>
     </div>
 
-    <!-- Current URL readout (kept for internal use but hidden visually) -->
+    <!-- Current URL readout (hidden visually, kept for internal state) -->
     <input type="text" id="currentUrl" readonly placeholder="No Signal" />
 
     <!-- Proxy iframe area -->
@@ -64,8 +63,22 @@
           <p>Awaiting input sequence.</p>
         </div>
       </div>
+
       <div id="loadingOverlay" class="loadingOverlay"><div class="spinner"></div></div>
-      <iframe id="proxyFrame"></iframe>
+
+      <iframe id="proxyFrame" title="Proxy Frame"></iframe>
+
+      <!-- embed-blocked fallback (hidden by default) -->
+      <div id="embedBlocked" class="embed-blocked hidden" role="dialog" aria-live="polite">
+        <div class="embed-content">
+          <p id="embedMsg">This site prevented embedding in the frame.</p>
+          <div class="embed-actions">
+            <button id="openExternalBtn">Open in new tab</button>
+            <button id="copyLinkBtn">Copy link</button>
+            <button id="dismissEmbedBtn" class="muted">Dismiss</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Futuristic ticker -->

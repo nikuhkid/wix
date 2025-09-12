@@ -1,41 +1,5 @@
-body {
-  background: #fff;
-  color: #000;
-  font-family: 'Bangers', cursive;
-}
-
-/* Comic dots background */
-body::before {
-  content: "";
-  position: fixed;
-  top:0; left:0; right:0; bottom:0;
-  background-image: radial-gradient(#000 1px, transparent 1px);
-  background-size: 20px 20px;
-  opacity: 0.1;
-  pointer-events: none;
-}
-
-/* Title Comic Style */
-.title {
-  color: #ff0;
-  text-shadow: 3px 3px #000;
-}
-
-/* Dropdowns */
-.dropbtn {
-  background: #ff0;
-  border: 2px solid #000;
-  color: #000;
-  border-radius: 8px;
-}
-.dropdown-content {
-  background: #fff;
-  border: 2px solid #000;
-}
-.dropdown-content a {
-  color: #000;
-}
-.dropdown-content a:hover {
-  background: #ff0;
-  color: #000;
-}
+/* comic.css - pop-art look */
+body.theme-comic { background:#fff8e7; color:#111; font-family:'Bangers',cursive; }
+body.theme-comic .title { color:#ffcc00; text-shadow:3px 3px #000; }
+body.theme-comic .dropbtn { background:#ffcc00; color:#000; border:2px solid #000; border-radius:8px; }
+body.theme-comic .dropdown-content { background:#fff; color:#000; border:2px solid #000; }

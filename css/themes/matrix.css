@@ -1,50 +1,5 @@
-body {
-  background: #000;
-  color: #0f0;
-  font-family: 'Courier New', monospace;
-  overflow: hidden;
-}
-
-/* Add scanline effect */
-body::before {
-  content: "";
-  position: fixed;
-  top:0; left:0; right:0; bottom:0;
-  background: repeating-linear-gradient(
-    rgba(0,255,0,0.05),
-    rgba(0,255,0,0.05) 2px,
-    transparent 2px,
-    transparent 4px
-  );
-  pointer-events: none;
-  z-index: 9999;
-}
-
-.top-bar {
-  background: #000;
-  border-bottom: 2px solid #0f0;
-}
-
-.title {
-  color: #0f0;
-  text-shadow: 0 0 5px #0f0, 0 0 15px #0f0;
-}
-
-/* Dropdowns */
-.dropbtn {
-  background: #000;
-  border: 1px solid #0f0;
-  color: #0f0;
-}
-.dropdown-content {
-  background: #000;
-  border: 1px solid #0f0;
-}
-.dropdown-content a {
-  color: #0f0;
-  font-family: 'Courier New', monospace;
-}
-.dropdown-content a:hover {
-  background: #0f0;
-  color: #000;
-}
+/* matrix.css - green on black */
+body.theme-matrix { background:#000; color:#0f0; font-family:'Share Tech Mono',monospace; }
+body.theme-matrix .title { color:#0f0; text-shadow:0 0 8px #0f0; }
+body.theme-matrix .dropbtn { background:#000; color:#0f0; border:1px solid #0a0; }
+body.theme-matrix .dropdown-content { background:#000; color:#0f0; border:1px solid #0a0; }

@@ -1,19 +1,28 @@
-console.log("Kuromi theme active.");
+// kuromi.js - spawn kuromi sprites randomly inside console-container
+(function(){
+  const INTERVAL_MS = 4200;
+  const container = document.querySelector('.console-container') || document.body;
+  let id = null;
 
-function spawnKuromi() {
-  const img = document.createElement("img");
-  img.src = "https://i.imgur.com/X4Qw0y0.png";
-  img.classList.add("kuromi-pop");
-  img.style.position = "absolute";
-  img.style.top = Math.random() * window.innerHeight + "px";
-  img.style.left = Math.random() * window.innerWidth + "px";
-  img.style.width = "80px";
-  img.style.height = "80px";
-  img.style.pointerEvents = "none";
-  img.style.zIndex = 9999;
-  document.body.appendChild(img);
+  function spawn() {
+    const r = container.getBoundingClientRect();
+    const img = document.createElement('img');
+    img.src = 'assets/kuromi.png';
+    img.className = 'kuromi-sprite';
+    img.style.left = Math.max(8, Math.floor(Math.random() * (r.width - 100))) + 'px';
+    img.style.top = Math.max(8, Math.floor(Math.random() * (r.height - 100))) + 'px';
+    img.style.opacity = '1';
+    container.appendChild(img);
+    setTimeout(() => { img.classList.add('fade-out'); setTimeout(()=> img.remove(), 700); }, 2200);
+  }
 
-  setTimeout(() => img.remove(), 4000);
-}
+  id = setInterval(spawn, INTERVAL_MS);
+  // initial
+  spawn();
 
-setInterval(spawnKuromi, 7000);
+  window.__themeCleanup = function(){
+    if (id) clearInterval(id);
+    id = null;
+    document.querySelectorAll('.kuromi-sprite').forEach(n=>n.remove());
+  };
+})();

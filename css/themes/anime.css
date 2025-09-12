@@ -1,17 +1,30 @@
-/* Anime Theme */
 body {
-  background: linear-gradient(180deg, #ffdee9, #b5fffc);
-  color: #222;
-  font-family: 'Sawarabi Gothic', sans-serif;
+  background: linear-gradient(135deg, #fefefe, #f0f0ff);
+  color: #333;
+  font-family: 'Nunito', sans-serif;
 }
 
-.console-container {
+.title {
+  color: #ff69b4;
+  text-shadow: 0 0 6px #ffb6c1;
+}
+
+/* Dropdowns */
+.dropbtn {
+  background: #fff;
   border: 2px solid #ff69b4;
-  background: rgba(255,255,255,0.9);
+  color: #ff69b4;
   border-radius: 20px;
-  box-shadow: 0 0 20px rgba(255,105,180,0.6);
 }
-
-button {
-  border-radius: 20px !important;
+.dropdown-content {
+  background: #fff;
+  border: 2px solid #ff69b4;
+  border-radius: 12px;
+}
+.dropdown-content a {
+  color: #ff69b4;
+}
+.dropdown-content a:hover {
+  background: #ff69b4;
+  color: #fff;
 }

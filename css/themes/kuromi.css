@@ -1,0 +1,30 @@
+/* Kuromi Theme */
+body {
+  background: linear-gradient(135deg, #2b002b, #000);
+  color: #fff;
+  font-family: 'Comic Sans MS', cursive;
+  overflow: hidden;
+}
+
+.console-container {
+  border: 2px solid #ff69b4;
+  box-shadow: 0 0 20px #ff69b4;
+}
+
+/* Random kuromi pops */
+body::after {
+  content: "";
+  background: url('https://i.imgur.com/X4Qw0y0.png') no-repeat center;
+  background-size: 80px 80px;
+  position: absolute;
+  width: 80px; height: 80px;
+  animation: kuromiPop 6s infinite;
+}
+
+@keyframes kuromiPop {
+  0% { top: -100px; left: 10%; opacity: 0; }
+  25% { top: 20%; left: 30%; opacity: 1; }
+  50% { top: 40%; left: 70%; opacity: 0; }
+  75% { top: 80%; left: 50%; opacity: 1; }
+  100% { top: -100px; left: 90%; opacity: 0; }
+}

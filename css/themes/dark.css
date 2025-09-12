@@ -1,15 +1,33 @@
-/* Dark Theme */
 body {
   background: radial-gradient(circle at center, #050505 0%, #000000 100%);
   color: #0f0;
+  font-family: 'Orbitron', sans-serif;
 }
 
-.console-container {
-  border-color: #0f0;
-  box-shadow: 0 0 20px rgba(0,255,0,0.3);
+.top-bar {
+  background: #000;
+  border-bottom: 2px solid #0f0;
 }
 
-h1.title {
-  color: #0ff;
-  text-shadow: 0 0 8px #0ff, 0 0 16px #0ff;
+.title {
+  color: #0f0;
+  text-shadow: 0 0 10px #0f0;
+}
+
+/* Dropdowns */
+.dropbtn {
+  background: #111;
+  border: 1px solid #0f0;
+  color: #0f0;
+}
+.dropdown-content {
+  background: #000;
+  border: 1px solid #0f0;
+}
+.dropdown-content a {
+  color: #0f0;
+}
+.dropdown-content a:hover {
+  background: #0f0;
+  color: #000;
 }

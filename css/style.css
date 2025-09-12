@@ -136,6 +136,7 @@ body {
 .select-container i {
   font-size: 18px;
   color: #aaa;
+  flex-shrink: 0;
 }
 
 .select-container select {
@@ -238,12 +239,27 @@ body {
   display: block;
 }
 
-/* === Themes (dropdown tint) === */
+/* === Themes (dropdown tint + icons) === */
 body.theme-dark .select-container { background: #222; color: #eee; }
+body.theme-dark .select-container i { color: #bbb; }
+
 body.theme-glitch .select-container { background: #2d0033; color: #ff80ff; }
+body.theme-glitch .select-container i { color: #ff4dff; }
+
 body.theme-matrix .select-container { background: #001a00; color: #00ff00; }
+body.theme-matrix .select-container i { color: #00cc00; }
+
 body.theme-kuromi .select-container { background: #1a0d1a; color: #ffb6ff; }
+body.theme-kuromi .select-container i { color: #ff66cc; }
+
 body.theme-comic .select-container { background: #fff8dc; color: #222; }
+body.theme-comic .select-container i { color: #ff4500; }
+
 body.theme-anime .select-container { background: #001f3f; color: #87cefa; }
+body.theme-anime .select-container i { color: #1e90ff; }
+
 body.theme-cyberpunk .select-container { background: #111; color: #ff0099; }
+body.theme-cyberpunk .select-container i { color: #00f0ff; }
+
 body.theme-minimal .select-container { background: #f9f9f9; color: #111; }
+body.theme-minimal .select-container i { color: #666; }

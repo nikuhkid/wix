@@ -1,32 +1,50 @@
-/* Matrix Theme */
 body {
   background: #000;
   color: #0f0;
-  font-family: 'Share Tech Mono', monospace;
+  font-family: 'Courier New', monospace;
   overflow: hidden;
 }
 
-.console-container {
-  border: 2px solid #0f0;
-  background: rgba(0,0,0,0.9);
-  box-shadow: 0 0 15px #0f0 inset;
-}
-
-/* Matrix rain background */
+/* Add scanline effect */
 body::before {
-  content: "01";
+  content: "";
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  color: rgba(0,255,0,0.15);
-  font-size: 20px;
-  line-height: 18px;
-  white-space: pre;
-  animation: matrixRain 5s linear infinite;
+  top:0; left:0; right:0; bottom:0;
+  background: repeating-linear-gradient(
+    rgba(0,255,0,0.05),
+    rgba(0,255,0,0.05) 2px,
+    transparent 2px,
+    transparent 4px
+  );
   pointer-events: none;
+  z-index: 9999;
 }
 
-@keyframes matrixRain {
-  from { transform: translateY(-100%); }
-  to { transform: translateY(100%); }
+.top-bar {
+  background: #000;
+  border-bottom: 2px solid #0f0;
+}
+
+.title {
+  color: #0f0;
+  text-shadow: 0 0 5px #0f0, 0 0 15px #0f0;
+}
+
+/* Dropdowns */
+.dropbtn {
+  background: #000;
+  border: 1px solid #0f0;
+  color: #0f0;
+}
+.dropdown-content {
+  background: #000;
+  border: 1px solid #0f0;
+}
+.dropdown-content a {
+  color: #0f0;
+  font-family: 'Courier New', monospace;
+}
+.dropdown-content a:hover {
+  background: #0f0;
+  color: #000;
 }

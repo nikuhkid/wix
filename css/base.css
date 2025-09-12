@@ -1,0 +1,26 @@
+/* ========= BASE ========= */
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: radial-gradient(circle at center, #050505 0%, #000000 100%);
+  color: #0f0;
+  overflow-x: hidden;
+}
+
+h1.title {
+  text-align: center;
+  margin: 20px 0;
+  color: #0ff;
+  text-shadow: 0 0 8px #0ff, 0 0 16px #0ff;
+  letter-spacing: 2px;
+}
+
+.console-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 15px;
+  border: 2px solid #0f0;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.85);
+  box-shadow: 0 0 20px rgba(0,255,0,0.3);
+}

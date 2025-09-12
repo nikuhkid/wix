@@ -1,0 +1,20 @@
+/* Cyberpunk Theme */
+body {
+  background: linear-gradient(90deg, #ff00ff, #00ffff, #ffea00);
+  background-size: 300% 300%;
+  animation: cyberShift 10s infinite linear;
+  font-family: 'Orbitron', sans-serif;
+  color: #fff;
+}
+
+.console-container {
+  border: 2px solid #0ff;
+  background: rgba(0,0,0,0.7);
+  box-shadow: 0 0 25px #0ff, inset 0 0 15px #f0f;
+}
+
+@keyframes cyberShift {
+  0% { background-position: 0 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}

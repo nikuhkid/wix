@@ -1,0 +1,15 @@
+/* Dark Theme */
+body {
+  background: radial-gradient(circle at center, #050505 0%, #000000 100%);
+  color: #0f0;
+}
+
+.console-container {
+  border-color: #0f0;
+  box-shadow: 0 0 20px rgba(0,255,0,0.3);
+}
+
+h1.title {
+  color: #0ff;
+  text-shadow: 0 0 8px #0ff, 0 0 16px #0ff;
+}

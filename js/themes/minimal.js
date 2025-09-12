@@ -1,2 +1,4 @@
-console.log("Minimal theme active.");
-// No extra effects, keeps things clean
+// minimal.js - no effects, placeholder cleanup
+window.__themeCleanup = function(){
+  // nothing
+};

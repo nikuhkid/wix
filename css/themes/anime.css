@@ -1,0 +1,17 @@
+/* Anime Theme */
+body {
+  background: linear-gradient(180deg, #ffdee9, #b5fffc);
+  color: #222;
+  font-family: 'Sawarabi Gothic', sans-serif;
+}
+
+.console-container {
+  border: 2px solid #ff69b4;
+  background: rgba(255,255,255,0.9);
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255,105,180,0.6);
+}
+
+button {
+  border-radius: 20px !important;
+}

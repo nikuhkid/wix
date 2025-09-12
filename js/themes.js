@@ -1,78 +1,93 @@
-// themes.js
-// Handles theme switching and effects
-(function(projLib){
-  'use strict';
+// THEMES MODULE
+// Handles all theme switching and special effects
 
-  const THEME_LIST = ['dark','glitch','matrix','kuromi','comic','anime','cyberpunk','minimal'];
-  let themeIndex = 0;
-  let effectInterval = null;
+let activeTheme = "dark";
+let kuromiInterval = null;
 
-  projLib.applyTheme = function(theme){
-    // Remove old theme classes
-    THEME_LIST.forEach(t => document.body.classList.remove('theme-'+t));
-    // Add new
-    document.body.classList.add('theme-'+theme);
-    // Trigger effects
-    triggerThemeEffects(theme);
-    // Save
-    localStorage.setItem('theme', theme);
-  };
+// Utility: random position inside viewport
+function randomPosition(size = 100) {
+  const x = Math.floor(Math.random() * (window.innerWidth - size));
+  const y = Math.floor(Math.random() * (window.innerHeight - size));
+  return { x, y };
+}
 
-  projLib.toggleTheme = function(){
-    themeIndex = (themeIndex+1)%THEME_LIST.length;
-    projLib.applyTheme(THEME_LIST[themeIndex]);
-    const btn = document.getElementById('toggleThemeBtn');
-    if(btn) btn.textContent = 'Theme: '+THEME_LIST[themeIndex];
-  };
+// Apply theme
+function applyTheme(theme) {
+  // Clear old theme
+  document.body.className = "";
+  document.body.classList.add(`theme-${theme}`);
+  activeTheme = theme;
 
-  function triggerThemeEffects(theme){
-    clearInterval(effectInterval);
-    document.querySelectorAll('.fx-element').forEach(el=>el.remove());
+  // Kill old effects
+  clearKuromi();
+  clearComicEffects();
 
-    const container = document.querySelector('.console-container');
-    if(!container) return;
-
-    if(theme==='matrix'){
-      // Falling green characters
-      effectInterval = setInterval(()=>{
-        const span=document.createElement('span');
-        span.className='fx-element matrix-char';
-        span.textContent = String.fromCharCode(0x30A0+Math.random()*96);
-        span.style.left = Math.random()*100+'%';
-        container.appendChild(span);
-        setTimeout(()=>span.remove(),2000);
-      },100);
-    }
-
-    if(theme==='kuromi'){
-      // Little kuromis popping
-      effectInterval=setInterval(()=>{
-        const img=document.createElement('img');
-        img.src='assets/kuromi.png';
-        img.className='fx-element kuromi-sprite';
-        img.style.left=Math.random()*90+'%';
-        img.style.top=Math.random()*90+'%';
-        container.appendChild(img);
-        setTimeout(()=>img.remove(),3000);
-      },2000);
-    }
-
-    if(theme==='glitch'){
-      // Glitch effect overlay
-      const glitch=document.createElement('div');
-      glitch.className='fx-element glitch-overlay';
-      container.appendChild(glitch);
-    }
+  // Activate theme-specific behavior
+  switch (theme) {
+    case "kuromi":
+      spawnKuromis();
+      break;
+    case "comic":
+      enableComicClicks();
+      break;
+    default:
+      break; // Dark, matrix, minimal, etc. just use CSS
   }
+}
 
-  // Boot theme
-  document.addEventListener('DOMContentLoaded', ()=>{
-    let theme=localStorage.getItem('theme');
-    if(!theme||!THEME_LIST.includes(theme)) theme='dark';
-    themeIndex=THEME_LIST.indexOf(theme);
-    projLib.applyTheme(theme);
-    const btn=document.getElementById('toggleThemeBtn');
-    if(btn) btn.textContent='Theme: '+theme;
-  });
+// ---------- KUROMI THEME ----------
+function spawnKuromis() {
+  kuromiInterval = setInterval(() => {
+    const { x, y } = randomPosition(100);
+    const img = document.createElement("img");
+    img.src = "assets/kuromi.png";
+    img.className = "kuromi-sprite";
+    img.style.left = `${x}px`;
+    img.style.top = `${y}px`;
 
-})(window.ProjLib=window.ProjLib||{});
+    document.body.appendChild(img);
+
+    // fade out + remove
+    setTimeout(() => {
+      img.classList.add("fade-out");
+      setTimeout(() => img.remove(), 1000);
+    }, 2000);
+  }, 4000); // one every 4s
+}
+
+function clearKuromi() {
+  if (kuromiInterval) {
+    clearInterval(kuromiInterval);
+    kuromiInterval = null;
+  }
+  document.querySelectorAll(".kuromi-sprite").forEach(el => el.remove());
+}
+
+// ---------- COMIC THEME ----------
+function enableComicClicks() {
+  document.addEventListener("click", comicEffectHandler);
+}
+
+function comicEffectHandler(e) {
+  const effects = ["pow.png", "zap.png", "splash.png"];
+  const img = document.createElement("img");
+  img.src = "assets/" + effects[Math.floor(Math.random() * effects.length)];
+  img.className = "comic-sprite";
+  img.style.left = `${e.pageX - 50}px`;
+  img.style.top = `${e.pageY - 50}px`;
+
+  document.body.appendChild(img);
+
+  setTimeout(() => {
+    img.classList.add("fade-out");
+    setTimeout(() => img.remove(), 500);
+  }, 600);
+}
+
+function clearComicEffects() {
+  document.removeEventListener("click", comicEffectHandler);
+  document.querySelectorAll(".comic-sprite").forEach(el => el.remove());
+}
+
+// Expose
+window.applyTheme = applyTheme;

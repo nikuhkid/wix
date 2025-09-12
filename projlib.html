@@ -3,65 +3,56 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ProjLib Control Node</title>
+  <title>ProjLib Control</title>
 
-  <!-- Fonts used by themes -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Bangers&family=Share+Tech+Mono&family=Noto+Sans+JP&display=swap" rel="stylesheet" />
-
-  <!-- Core CSS -->
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/components.css" />
-
-  <!-- Theme CSS (swapped dynamically) -->
-  <link id="theme-stylesheet" rel="stylesheet" href="css/themes/dark.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="theme-dark">
+  <div class="console-container">
 
-  <header class="top-bar">
-    <div class="left-controls">
-      <label class="switch" title="Proxy mode">
+    <h1 class="title">ProjLib Control Node [BETA]</h1>
+
+    <!-- Top Control Bar -->
+    <div class="control-bar">
+      <label class="switch">
         <input type="checkbox" id="proxyToggle" />
         <span class="slider"></span>
-        <span class="label">Proxy</span>
+        <span class="label">Proxy Mode</span>
       </label>
-    </div>
 
-    <h1 class="title">ProjLib Control Node <small class="beta">[BETA]</small></h1>
-
-    <div class="right-controls">
-      <button id="scannerBtn" class="control-btn">Scanner</button>
-      <button id="themeBtn" class="control-btn">Theme</button>
-    </div>
-  </header>
-
-  <main class="console-container">
-
-    <!-- Menu bar (populated from hubData.json) -->
-    <div id="menu-bar" class="menu-bar">
-      <div class="dropdown" data-id="brain"><button class="dropbtn">Brain Tease</button><div class="dropdown-content"></div></div>
-      <div class="dropdown" data-id="play"><button class="dropbtn">Arcade</button><div class="dropdown-content"></div></div>
-      <div class="dropdown" data-id="anime"><button class="dropbtn">Animation</button><div class="dropdown-content"></div></div>
-      <div class="dropdown" data-id="read"><button class="dropbtn">Readable</button><div class="dropdown-content"></div></div>
-      <div class="dropdown" data-id="watch"><button class="dropbtn">Watchable</button><div class="dropdown-content"></div></div>
-      <div class="dropdown" data-id="daily"><button class="dropbtn">Dailies</button><div class="dropdown-content"></div></div>
+      <div class="right-controls">
+        <button id="scannerBtn"><i class="ri-search-eye-line"></i> Scanner</button>
+        <button id="toggleThemeBtn"><i class="ri-palette-line"></i> Theme</button>
+      </div>
     </div>
 
     <!-- Scanner/search bar -->
-    <div id="scannerBar" class="scanner hidden" aria-hidden="true">
-      <input id="urlInput" type="text" placeholder="Enter URL or search term..." />
-      <button id="goBtn">Go</button>
+    <form id="scannerForm" class="scanner hidden">
+      <input type="text" id="urlInput" placeholder="Enter URL or code sequence" />
+      <button type="submit">Engage</button>
+    </form>
+
+    <!-- Dropdown selectors -->
+    <div class="dropdowns-grid">
+      <div class="select-container"><i class="ri-brain-line"></i><select id="brain"></select></div>
+      <div class="select-container"><i class="ri-gamepad-line"></i><select id="play"></select></div>
+      <div class="select-container"><i class="ri-movie-line"></i><select id="anime"></select></div>
+      <div class="select-container"><i class="ri-book-open-line"></i><select id="read"></select></div>
+      <div class="select-container"><i class="ri-video-line"></i><select id="watch"></select></div>
+      <div class="select-container"><i class="ri-calendar-line"></i><select id="daily"></select></div>
     </div>
 
     <!-- Action buttons -->
     <div class="action-buttons">
-      <button id="homeBtn" class="action-btn">Home</button>
-      <button id="refreshBtn" class="action-btn">Refresh</button>
-      <button id="backBtn" class="action-btn">Back</button>
-      <button id="forwardBtn" class="action-btn">Forward</button>
+      <button id="homeBtn"><i class="ri-home-2-line"></i> Home</button>
+      <button id="refreshBtn"><i class="ri-restart-line"></i> Refresh</button>
+      <button id="fullscreenBtn"><i class="ri-fullscreen-line"></i> Fullscreen</button>
     </div>
 
-    <!-- Proxy container + iframe -->
-    <div id="proxyContainer" class="proxy-container">
+    <!-- Proxy iframe area -->
+    <div id="proxyContainer">
       <div id="initialMessage" class="idle-state">
         <div>
           <i class="ri-global-line"></i>
@@ -69,17 +60,14 @@
           <p>Awaiting input sequence.</p>
         </div>
       </div>
-
-      <div id="loadingOverlay" class="loadingOverlay" aria-hidden="true"><div class="spinner"></div></div>
-
-      <iframe id="proxyFrame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+      <div id="loadingOverlay" class="loadingOverlay"><div class="spinner"></div></div>
+      <iframe id="proxyFrame"></iframe>
     </div>
 
-  </main>
+    <!-- Notification -->
+    <div id="notification"></div>
 
-  <!-- Core scripts -->
-  <script src="js/core.js"></script>
-  <script src="js/themeManager.js"></script>
-  <script src="js/ui.js"></script>
+  </div>
+  <script src="js/apps.js"></script>
 </body>
 </html>

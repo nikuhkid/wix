@@ -1,28 +1,8 @@
-/* Glitch Theme */
-body {
-  background: #0a0a0a;
-  color: #f0f;
-  font-family: 'Courier New', monospace;
-  overflow: hidden;
-}
-
-.console-container {
-  border: 2px solid #f0f;
-  box-shadow: 0 0 10px #f0f, 0 0 30px #f0f inset;
-  position: relative;
-}
-
-/* Glitch animation */
+/* glitch.css - neon RGB shifts */
+body.theme-glitch { background:#111; color:#fff; font-family:'Orbitron',sans-serif; }
+body.theme-glitch .title { animation:glitch 1.5s infinite; color:#fff; }
 @keyframes glitch {
-  0% { clip-path: inset(20% 0 70% 0); transform: translate(-3px, -3px); }
-  20% { clip-path: inset(40% 0 30% 0); transform: translate(3px, 3px); }
-  40% { clip-path: inset(10% 0 60% 0); transform: translate(-3px, 2px); }
-  60% { clip-path: inset(30% 0 40% 0); transform: translate(3px, -2px); }
-  100% { clip-path: inset(20% 0 70% 0); transform: translate(0,0); }
+  0%{ text-shadow:2px 0 red,-2px 0 blue;} 50%{ text-shadow:-2px 0 lime,2px 0 yellow; } 100%{ text-shadow:2px 0 red,-2px 0 blue;}
 }
-
-h1.title {
-  color: #f0f;
-  text-shadow: 0 0 5px #fff, 0 0 10px #f0f;
-  animation: glitch 2s infinite linear alternate;
-}
+body.theme-glitch .dropbtn { background:#222; color:#f0f; border:1px solid #f0f; }
+body.theme-glitch .dropdown-content { background:#111; color:#f0f; border:1px solid #f0f; }

@@ -1,42 +1,5 @@
-body {
-  background: linear-gradient(135deg, #1a1a1a, #333);
-  color: #f8c;
-  font-family: 'Comic Sans MS', cursive;
-  overflow: hidden;
-}
-
-/* Kuromi sprites randomly peeking */
-body::after {
-  content: "";
-  background-image: url('https://i.ibb.co/J2MB7Bt/kuromi.png');
-  background-repeat: repeat;
-  background-size: 100px;
-  opacity: 0.05;
-  position: fixed;
-  top:0; left:0; right:0; bottom:0;
-  pointer-events: none;
-}
-
-.title {
-  color: #f8c;
-  text-shadow: 0 0 5px #f8c, 0 0 10px #f0f;
-}
-
-/* Dropdowns */
-.dropbtn {
-  background: #222;
-  border: 1px solid #f8c;
-  color: #f8c;
-  border-radius: 12px;
-}
-.dropdown-content {
-  background: #333;
-  border: 1px solid #f8c;
-}
-.dropdown-content a {
-  color: #f8c;
-}
-.dropdown-content a:hover {
-  background: #f8c;
-  color: #000;
-}
+/* kuromi.css - pink gradient and cute vibe */
+body.theme-kuromi { background:linear-gradient(135deg,#2b002b,#1a003a); color:#ffd6f2; font-family:'Comic Sans MS',cursive; }
+body.theme-kuromi .title { color:#ff9ad5; text-shadow:0 0 8px #ff9ad5; }
+body.theme-kuromi .dropbtn { background:linear-gradient(90deg,#330033,#8c2f72); color:#fff; border:1px solid #ff66cc; border-radius:12px; }
+body.theme-kuromi .dropdown-content { background:#2b002b; color:#ffd6f2; border:1px solid #ff66cc; }

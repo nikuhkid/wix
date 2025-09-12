@@ -1,0 +1,27 @@
+/* Comic Theme */
+body {
+  background: #fff8dc;
+  color: #111;
+  font-family: 'Bangers', cursive;
+}
+
+.console-container {
+  border: 5px solid #111;
+  background: #fff;
+  box-shadow: 8px 8px 0 #111;
+  border-radius: 12px;
+}
+
+/* Comic click "pow" */
+button:active::after {
+  content: "POW!";
+  position: absolute;
+  font-size: 20px;
+  color: red;
+  animation: comicPop 0.5s ease-out forwards;
+}
+
+@keyframes comicPop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1.2); opacity: 1; }
+}

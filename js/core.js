@@ -1,45 +1,39 @@
-// core.js
-// Utility functions and data handling
-(function(projLib){
+// core.js - utility functions and hub loader
+(function (ProjLib) {
   'use strict';
 
-  // Validate if string is URL
-  projLib.isValidUrl = function(str){
+  ProjLib.isValidUrl = function (s) {
     try {
-      const u = new URL(str.startsWith('http') ? str : 'https://' + str);
-      return u.hostname.includes('.') || u.hostname === 'localhost';
+      const u = new URL(s.startsWith('http') ? s : 'https://' + s);
+      return !!u.hostname && (u.hostname.includes('.') || u.hostname === 'localhost');
     } catch { return false; }
   };
 
-  // Escape unsafe text
-  projLib.sanitizeText = function(txt){
-    const t = document.createElement('div');
-    t.textContent = txt;
-    return t.innerHTML;
+  ProjLib.sanitizeText = function (txt) {
+    const d = document.createElement('div');
+    d.textContent = txt;
+    return d.innerHTML;
   };
 
-  // Fetch with timeout
-  projLib.fetchWithTimeout = function(url, opts, timeoutMs=15000){
+  ProjLib.fetchWithTimeout = function (url, opts = {}, timeoutMs = 15000) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     return fetch(url, {...opts, signal: controller.signal})
-      .finally(()=>clearTimeout(timer));
+      .then(resp => { clearTimeout(timer); return resp; })
+      .catch(err => { clearTimeout(timer); throw err; });
   };
 
-  // Fetch with retry
-  projLib.fetchWithRetry = function(url, opts={}, retries=2, timeoutMs=15000){
-    return projLib.fetchWithTimeout(url, opts, timeoutMs)
-      .catch(err=>{
-        if(retries>0) return projLib.fetchWithRetry(url, opts, retries-1, timeoutMs);
-        throw err;
-      });
+  ProjLib.fetchWithRetry = function (url, opts={}, retries=2, timeoutMs=15000) {
+    return ProjLib.fetchWithTimeout(url, opts, timeoutMs).catch(err => {
+      if (retries > 0) return ProjLib.fetchWithRetry(url, opts, retries - 1, timeoutMs);
+      throw err;
+    });
   };
 
-  // Load hub data (JSON)
-  projLib.loadHubData = function(path){
-    return projLib.fetchWithRetry(path)
-      .then(resp=>resp.json())
-      .catch(()=>({categories:[]}));
+  ProjLib.loadHubData = function (path='./hubData.json') {
+    return ProjLib.fetchWithRetry(path, {}, 2, 10000)
+      .then(resp => { if(!resp.ok) throw new Error('bad hub fetch'); return resp.json(); })
+      .catch(() => ({ categories: [] }));
   };
 
-})(window.ProjLib=window.ProjLib||{});
+})(window.ProjLib = window.ProjLib || {});

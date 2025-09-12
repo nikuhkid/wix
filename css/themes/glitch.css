@@ -1,0 +1,28 @@
+/* Glitch Theme */
+body {
+  background: #0a0a0a;
+  color: #f0f;
+  font-family: 'Courier New', monospace;
+  overflow: hidden;
+}
+
+.console-container {
+  border: 2px solid #f0f;
+  box-shadow: 0 0 10px #f0f, 0 0 30px #f0f inset;
+  position: relative;
+}
+
+/* Glitch animation */
+@keyframes glitch {
+  0% { clip-path: inset(20% 0 70% 0); transform: translate(-3px, -3px); }
+  20% { clip-path: inset(40% 0 30% 0); transform: translate(3px, 3px); }
+  40% { clip-path: inset(10% 0 60% 0); transform: translate(-3px, 2px); }
+  60% { clip-path: inset(30% 0 40% 0); transform: translate(3px, -2px); }
+  100% { clip-path: inset(20% 0 70% 0); transform: translate(0,0); }
+}
+
+h1.title {
+  color: #f0f;
+  text-shadow: 0 0 5px #fff, 0 0 10px #f0f;
+  animation: glitch 2s infinite linear alternate;
+}

@@ -1,20 +1,5 @@
-/* Minimal Theme */
-body {
-  background: #fafafa;
-  color: #111;
-  font-family: 'Helvetica Neue', sans-serif;
-}
-
-.console-container {
-  border: 1px solid #ddd;
-  background: #fff;
-  box-shadow: none;
-  border-radius: 6px;
-}
-
-button {
-  border-radius: 3px !important;
-  background: #eee !important;
-  border: 1px solid #ccc !important;
-  color: #111 !important;
-}
+/* minimal.css - calm and simple */
+body.theme-minimal { background:#fafafa; color:#111; font-family:Arial, sans-serif; }
+body.theme-minimal .title { color:#111; text-shadow:none; }
+body.theme-minimal .dropbtn { background:#fff; color:#111; border:1px solid #ddd; }
+body.theme-minimal .dropdown-content { background:#fff; color:#111; border:1px solid #ddd; }

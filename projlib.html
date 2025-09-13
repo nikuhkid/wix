@@ -1,35 +1,40 @@
+<!-- ============================================================
+   PROJECT: ProjLib Control Node [BETA]
+   RULES:
+   - Do NOT rename this title in <title>.
+   - Do NOT rename referenced files (index.html, css/style.css, js/apps.js).
+   - All changes must respect the project identity.
+   ============================================================ -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ProjLib Control</title>
+  <title>ProjLib Control Node [BETA]</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="theme-dark">
+<body>
   <div class="console-container">
 
-    <h1 class="title">ProjLib Control Node [BETA]</h1>
-
-    <!-- Top Control Bar -->
-    <div class="control-bar">
-      <label class="switch">
-        <input type="checkbox" id="proxyToggle" />
-        <span class="slider"></span>
-        <span class="label">Proxy Mode</span>
-      </label>
-
-      <div class="right-controls">
+    <!-- HEADER -->
+    <header class="header">
+      <h1 class="title">ProjLib Control Node [BETA]</h1>
+      <div class="controls">
+        <label class="switch">
+          <input type="checkbox" id="proxyToggle" />
+          <span class="slider"></span>
+          <span class="label">Proxy Mode</span>
+        </label>
         <button id="scannerBtn"><i class="ri-search-eye-line"></i> Scanner</button>
-        <button id="toggleThemeBtn"><i class="ri-palette-line"></i> Theme</button>
+        <button id="themeBtn"><i class="ri-paint-brush-line"></i> Theme</button>
       </div>
-    </div>
+    </header>
 
-    <!-- Scanner/search bar -->
-    <form id="scannerForm" class="scanner hidden">
+    <!-- Scanner/search bar (hidden by default) -->
+    <form id="proxyForm" class="scanner hidden">
       <input type="text" id="urlInput" placeholder="Enter URL or code sequence" />
       <button type="submit">Engage</button>
     </form>
@@ -51,6 +56,9 @@
       <button id="fullscreenBtn"><i class="ri-fullscreen-line"></i> Fullscreen</button>
     </div>
 
+    <!-- Current URL readout -->
+    <input type="text" id="currentUrl" readonly placeholder="No Signal" />
+
     <!-- Proxy iframe area -->
     <div id="proxyContainer">
       <div id="initialMessage" class="idle-state">
@@ -61,13 +69,11 @@
         </div>
       </div>
       <div id="loadingOverlay" class="loadingOverlay"><div class="spinner"></div></div>
-      <iframe id="proxyFrame"></iframe>
+      <iframe id="proxyFrame" src=""></iframe>
     </div>
 
-    <!-- Notification -->
-    <div id="notification"></div>
-
   </div>
+
   <script src="js/apps.js"></script>
 </body>
 </html>

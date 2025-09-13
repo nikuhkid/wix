@@ -1,265 +1,187 @@
-/* === Base === */
+/* ============================================================
+   PROJECT: ProjLib Control Node [BETA]
+   - Do NOT rename this file (style.css) or linked reference.
+   - Keep project title unchanged in index.html.
+   ============================================================ */
+
 body {
   margin: 0;
   font-family: 'Orbitron', sans-serif;
   background: #111;
   color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
 }
 
 .console-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 15px;
+  width: 95%;
+  max-width: 1400px;
+  margin: 20px;
 }
 
-.title {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* === Control Bar === */
-.control-bar {
+/* HEADER */
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
 }
-
-.switch {
+.header .title {
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+}
+.controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
+/* SWITCH */
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
 .switch input {
   display: none;
 }
-
-.slider {
+.switch .slider {
   width: 40px;
   height: 20px;
   background: #555;
   border-radius: 20px;
+  margin-right: 5px;
   position: relative;
-  cursor: pointer;
 }
-
-.slider::before {
+.switch .slider::before {
   content: "";
   position: absolute;
   width: 16px;
   height: 16px;
-  left: 2px;
-  top: 2px;
-  background: #fff;
+  background: #eee;
   border-radius: 50%;
-  transition: transform 0.3s;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s;
 }
-
 .switch input:checked + .slider::before {
   transform: translateX(20px);
 }
 
-.right-controls {
+/* SCANNER */
+.scanner {
+  margin: 10px 0;
   display: flex;
   gap: 10px;
 }
+.hidden {
+  display: none;
+}
+.scanner input {
+  flex-grow: 1;
+  padding: 5px;
+  font-size: 14px;
+}
 
-#scannerBtn,
-#toggleThemeBtn {
+/* DROPDOWNS */
+.dropdowns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.select-container {
+  display: flex;
+  align-items: center;
+  background: #222;
+  border-radius: 8px;
+  padding: 5px;
+}
+.select-container i {
+  margin-right: 8px;
+}
+.select-container select {
+  flex-grow: 1;
+  font-size: 12px;
+  background: transparent;
+  color: #eee;
+  border: none;
+  outline: none;
+  height: 28px;
+}
+
+/* ACTION BUTTONS */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.action-buttons button {
   padding: 6px 12px;
   border: none;
   border-radius: 6px;
   background: #333;
   color: #eee;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
-
-#scannerBtn:hover,
-#toggleThemeBtn:hover {
-  background: #555;
-}
-
-/* === Scanner === */
-.scanner {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 15px;
-}
-
-.scanner.hidden {
-  display: none;
-}
-
-.scanner input {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #444;
-  border-radius: 6px;
-  background: #1a1a1a;
-  color: #eee;
-}
-
-.scanner button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  background: #444;
-  color: #eee;
-  cursor: pointer;
-}
-
-.scanner button:hover {
-  background: #666;
-}
-
-/* === Dropdowns === */
-.dropdowns-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.select-container {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: #222;
-  border-radius: 6px;
-  padding: 4px 8px;
-}
-
-.select-container i {
-  font-size: 18px;
-  color: #aaa;
-  flex-shrink: 0;
-}
-
-.select-container select {
-  flex: 1;
-  min-width: 0;
-  padding: 6px;
-  border: none;
-  border-radius: 4px;
-  background: transparent;
-  color: inherit;
-  font-size: 14px;
-  appearance: none;
-  cursor: pointer;
-}
-
-/* === Action Buttons === */
-.action-buttons {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.action-buttons button {
-  flex: 1;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
-  background: #333;
-  color: #eee;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  justify-content: center;
-}
-
 .action-buttons button:hover {
-  background: #555;
+  background: #444;
 }
 
-/* === Proxy Container === */
+/* URL readout */
+#currentUrl {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 6px;
+  border: 1px solid #333;
+  background: #000;
+  color: #0f0;
+  font-family: monospace;
+}
+
+/* PROXY CONTAINER */
 #proxyContainer {
   position: relative;
-  border: 1px solid #333;
-  border-radius: 8px;
-  overflow: hidden;
   background: #000;
+  border: 2px solid #333;
+  border-radius: 10px;
   height: 70vh;
+  overflow: hidden;
 }
-
 #proxyFrame {
   width: 100%;
   height: 100%;
   border: none;
 }
-
 .idle-state {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100%;
-  color: #777;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #666;
 }
-
 .loadingOverlay {
+  display: none;
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: none;
+  background: rgba(0, 0, 0, 0.8);
   justify-content: center;
   align-items: center;
 }
-
 .spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid #555;
-  border-top: 4px solid #0ff;
+  border: 4px solid #666;
+  border-top-color: #0f0;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
-
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
-
-/* === Notification === */
-#notification {
-  position: fixed;
-  bottom: 15px;
-  right: 15px;
-  background: #222;
-  padding: 10px 15px;
-  border-radius: 6px;
-  display: none;
-}
-
-#notification.show {
-  display: block;
-}
-
-/* === Themes (dropdown tint + icons) === */
-body.theme-dark .select-container { background: #222; color: #eee; }
-body.theme-dark .select-container i { color: #bbb; }
-
-body.theme-glitch .select-container { background: #2d0033; color: #ff80ff; }
-body.theme-glitch .select-container i { color: #ff4dff; }
-
-body.theme-matrix .select-container { background: #001a00; color: #00ff00; }
-body.theme-matrix .select-container i { color: #00cc00; }
-
-body.theme-kuromi .select-container { background: #1a0d1a; color: #ffb6ff; }
-body.theme-kuromi .select-container i { color: #ff66cc; }
-
-body.theme-comic .select-container { background: #fff8dc; color: #222; }
-body.theme-comic .select-container i { color: #ff4500; }
-
-body.theme-anime .select-container { background: #001f3f; color: #87cefa; }
-body.theme-anime .select-container i { color: #1e90ff; }
-
-body.theme-cyberpunk .select-container { background: #111; color: #ff0099; }
-body.theme-cyberpunk .select-container i { color: #00f0ff; }
-
-body.theme-minimal .select-container { background: #f9f9f9; color: #111; }
-body.theme-minimal .select-container i { color: #666; }
